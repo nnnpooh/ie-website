@@ -23,3 +23,12 @@
 .footerContact{
     font-size: 80%;
 }
+
+.btnCurriculum{
+    background-color: white;
+    color: #47080B;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    width: 300px;
+    border: 1px dashed #47080B;
+    @apply text-black rounded-xl md:mr-1 mt-1
+}

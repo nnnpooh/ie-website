@@ -3,7 +3,7 @@ import styles from "./News.module.css";
 
 function HomeNews(){
     return (
-        <div className="section_conatiner">
+        <div className="section_container">
             <div className="text-center">
                 <h1 className="section_title text-white">NEWS $ ACTIVITIES</h1>
             </div>

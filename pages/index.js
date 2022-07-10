@@ -5,6 +5,7 @@ import Navbar from "../components/layouts/Navbar";
 import Carousel from "../components/layouts/Carousel";
 import HomeNews from "../components/news/HomeNews";
 import Footer from "../components/layouts/Footer";
+import HomeCurriculum from "../components/curriculum/HomeCurriculum";
 export default function Home() {
   return (
     <div>
@@ -30,6 +31,9 @@ export default function Home() {
 
         <div>
           <HomeNews />
+        </div>
+        <div>
+          <HomeCurriculum />
         </div>
         
       </main>
