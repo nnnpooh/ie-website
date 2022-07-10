@@ -3,7 +3,7 @@ function Carousel() {
     return (
         <div id="default-carousel" class="relative" data-carousel="static">
 
-            <div class="overflow-hidden relative h-96 rounded-lg ">
+            <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
 
                 <div class=" duration-700 ease-in-out" data-carousel-item>
                     <span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
