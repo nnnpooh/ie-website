@@ -6,6 +6,7 @@ import Carousel from "../components/layouts/Carousel";
 import HomeNews from "../components/news/HomeNews";
 import Footer from "../components/layouts/Footer";
 import HomeCurriculum from "../components/curriculum/HomeCurriculum";
+import ExternalLink from "../components/layouts/ExternalLink";
 export default function Home() {
   return (
     <div>
@@ -14,7 +15,10 @@ export default function Home() {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="keywords" content="วิศวกรรมศาสตร์, รับสมัคร, ปริญญาตรี, ปริญญาโท, ปริญญาเอก, หลักสูตร, ศึกษาต่อ, ทุนการศึกษา, ดูงาน, ศึกษาดูงาน, IE, CMU, Industrial Engineering, Chiang Mai" />
+        <meta
+          name="keywords"
+          content="วิศวกรรมศาสตร์, รับสมัคร, ปริญญาตรี, ปริญญาโท, ปริญญาเอก, หลักสูตร, ศึกษาต่อ, ทุนการศึกษา, ดูงาน, ศึกษาดูงาน, IE, CMU, Industrial Engineering, Chiang Mai"
+        />
       </Head>
       <NextSeo
         title="ไออี มช | ภาควิชาวิศวกรรมอุตสาหการ | คณะวิศวกรรมศาสตร์ | มหาวิทยาลัยเชียงใหม่"
@@ -26,7 +30,7 @@ export default function Home() {
       />
       <Navbar />
 
-      <main >
+      <main>
         <Carousel />
 
         <div>
@@ -35,7 +39,9 @@ export default function Home() {
         <div>
           <HomeCurriculum />
         </div>
-        
+        <div>
+          <ExternalLink />
+        </div>
       </main>
 
       <Footer />
