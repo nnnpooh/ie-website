@@ -26,7 +26,7 @@ function Navbar() {
             <a href="/about_us" className={styles.menuItem}>Members</a>
             <a href="/comming_soon" className={styles.menuItem}>Research</a>
             <a href="/contact" className={styles.menuItem}>Resources</a>
-            <a href="/" className={styles.menuItem}>Contact</a>
+            <a href="/contact" className={styles.menuItem}>Contact</a>
             <a href="/" className={styles.menuItem}>EN</a>
             <a href="/" className={styles.menuItem}>Search</a>
           </div>

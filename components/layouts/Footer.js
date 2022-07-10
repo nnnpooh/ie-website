@@ -8,9 +8,9 @@ function Footer() {
             <h5>MAP</h5>
             <div className={styles.googleMap}>
               <iframe
+              className="w-full"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3777.0623839901814!2d98.94944231484689!3d18.795372987249504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3a6de4ff030f%3A0x356e11b17f0636bd!2z4Lig4Liy4LiE4Lin4Li04LiK4Liy4Lin4Li04Lio4Lin4LiB4Lij4Lij4Lih4Lit4Li44LiV4Liq4Liy4Lir4LiB4Liy4Lij!5e0!3m2!1sth!2sth!4v1657441662767!5m2!1sth!2sth"
                 style={{ border: 0 }}
-                width="250"
                 height="200"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"

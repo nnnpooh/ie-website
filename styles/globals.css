@@ -38,4 +38,17 @@ a {
   background-color: #610D17;
 }
 
+.contact_container{
+@apply mx-auto md:px-32 px-4 mt-8 mb-8
+}
+.contact_title_container{
+  background-color: #47080B;
+  color: white;
+  @apply p-4
+}
+.contact_container_body{
+  background-color: white;
+  @apply p-4
+}
+
 
