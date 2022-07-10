@@ -3,8 +3,8 @@ function Footer() {
   return (
     <footer>
       <div className={styles.footer1Container}>
-        <div className="flex md:px-52 pt-4 pb-4 text-white">
-          <div className="w-1 md:w-1/4">
+        <div className="flex flex-wrap md:px-52 pt-4 pb-4 text-white">
+          <div className="w-1/1 md:w-1/4 p-4">
             <h5>MAP</h5>
             <div className={styles.googleMap}>
               <iframe
@@ -17,7 +17,7 @@ function Footer() {
               ></iframe>
             </div>
           </div>
-          <div className="w-1 md:w-1/4">
+          <div className="w-1/1 md:w-1/4 p-4">
             <h5>CONTACT US</h5>
             <p className={`${styles.footerContact} pb-3`}>
               ภาควิชาวิศวกรรมอุตสาหการ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่
@@ -33,7 +33,7 @@ function Footer() {
               อีเมลล์ iecmu000@gmail.com
             </p>
           </div>
-          <div className="w-1 md:w-1/4">
+          <div className="w-1/1 md:w-1/4 p-4">
             <h5>QUICK LINK</h5>
             <ul className={`list-disc px-5 ${styles.footerContact}`}>
               <a href="http://iecenter.eng.cmu.ac.th/">
@@ -62,7 +62,7 @@ function Footer() {
               </a>
             </ul>
           </div>
-          <div className="w-1 md:w-1/4">
+          <div className="w-1/1 md:w-1/4 p-4">
             <h5>SITEMAP</h5>
             <ul className={`list-disc px-5 ${styles.footerContact}`}>
               <a href="#">
@@ -91,7 +91,7 @@ function Footer() {
         </div>
       </div>
       <div className={styles.footer2Container}>
-        <div className="container mx-auto md:px-52 bottom-0">
+        <div className="container mx-auto md:px-52 bottom-0 p-4">
           <p className="text-white">
             © 2022 Industrial Engineering CMU. All right reserved.
           </p>

@@ -17,7 +17,8 @@
 .footer2Container{
     background-color: #45060C;
     height: 60px;
-    @apply w-full pt-4 pb-4;
+    font-size: 70%;
+    @apply w-full pt-2 pb-4;
 }
 
 .footerContact{
