@@ -21,7 +21,7 @@ function Navbar() {
 
           <div className="hidden md:flex items-center space-x-1">
             <a href="/" className={styles.menuItem}>Home</a>
-            <a href="/shop" className={styles.menuItem}>About</a>
+            <a href="/about" className={styles.menuItem}>About</a>
             <a href="/how_to" className={styles.menuItem}>Curriculum</a>
             <a href="/about_us" className={styles.menuItem}>Members</a>
             <a href="/comming_soon" className={styles.menuItem}>Research</a>
@@ -70,7 +70,7 @@ function Navbar() {
             </li>
             <li>
               <a
-                href="/shop"
+                href="/about"
                 className={`block text-sm px-2 py-4 `}
               >
                 About
