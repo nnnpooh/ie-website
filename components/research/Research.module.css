@@ -1,0 +1,32 @@
+.p{
+    font-size: 80%;
+}
+.cardTitle{
+    color:#47080B;
+}
+.tag{
+    background-color: #47080B;
+    color:white;
+    width: 150px;
+    font-size: 80%;;
+    @apply text-center rounded-full p-1
+}
+
+.curriculumTag{
+    background-color: #47080B;
+    color:white;
+    font-size: 80%;;
+    @apply text-center rounded-full p-1
+}
+
+.btnReadMore{
+    background-color: #47080B;
+    color: white;
+    font-size: 80%;
+    @apply text-center rounded-xl md:mr-1 mt-1 w-full h-10
+}
+
+.date{
+    font-size: 70%;
+    color:#8A8A8A;
+}
