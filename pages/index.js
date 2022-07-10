@@ -8,6 +8,7 @@ import Footer from "../components/layouts/Footer";
 import HomeCurriculum from "../components/curriculum/HomeCurriculum";
 import ExternalLink from "../components/layouts/ExternalLink";
 import HomeResearch from "../components/research/HomeResearch";
+import Partner from "../components/layouts/Partner";
 export default function Home() {
   return (
     <div>
@@ -45,6 +46,9 @@ export default function Home() {
         </div>
         <div>
           <HomeResearch />
+        </div>
+        <div>
+          <Partner />
         </div>
       </main>
 
