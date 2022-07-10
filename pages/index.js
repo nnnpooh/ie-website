@@ -22,8 +22,11 @@ export default function Home() {
         }}
       />
       <Navbar />
+      
       <main >
         <Carousel />
+
+        
       </main>
 
       <footer>
