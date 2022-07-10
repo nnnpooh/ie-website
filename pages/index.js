@@ -3,7 +3,7 @@ import Image from "next/image";
 import { NextSeo } from "next-seo";
 import Navbar from "../components/layouts/Navbar";
 import Carousel from "../components/layouts/Carousel";
-import HomeNew from "../components/news/HomeNews";
+import HomeNews from "../components/news/HomeNews";
 import Footer from "../components/layouts/Footer";
 export default function Home() {
   return (
@@ -29,7 +29,7 @@ export default function Home() {
         <Carousel />
 
         <div>
-          <HomeNew />
+          <HomeNews />
         </div>
         
       </main>
