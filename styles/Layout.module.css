@@ -9,3 +9,17 @@
 .menuItem{
     @apply py-4 px-2;
 }
+
+.footer1Container{
+    background-color: #630D17;
+}
+
+.footer2Container{
+    background-color: #45060C;
+    height: 60px;
+    @apply w-full pt-4 pb-4;
+}
+
+.footerContact{
+    font-size: 80%;
+}

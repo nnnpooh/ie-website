@@ -3,6 +3,8 @@ import Image from "next/image";
 import { NextSeo } from "next-seo";
 import Navbar from "../components/layouts/Navbar";
 import Carousel from "../components/layouts/Carousel";
+import HomeNew from "../components/news/HomeNews";
+import Footer from "../components/layouts/Footer";
 export default function Home() {
   return (
     <div>
@@ -22,16 +24,17 @@ export default function Home() {
         }}
       />
       <Navbar />
-      
+
       <main >
         <Carousel />
 
+        <div>
+          <HomeNew />
+        </div>
         
       </main>
 
-      <footer>
-        
-      </footer>
+      <Footer />
     </div>
   );
 }
