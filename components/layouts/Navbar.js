@@ -91,7 +91,7 @@ function Navbar() {
                 </a>
               </li>
               <li className="">
-                <a href="/" className={`block text-sm px-2 py-4`}>
+                <a href="/member/staff" className={`block text-sm px-2 py-4`}>
                   Supporting Staff
                 </a>
               </li>
