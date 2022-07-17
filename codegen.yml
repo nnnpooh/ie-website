@@ -1,12 +1,6 @@
 overwrite: true
-schema: "http://35.213.138.100/graphql"
-documents: "src/**/*.graphql"
+schema: 'http://35.213.138.100/graphql'
 generates:
-  src/generated/graphql.tsx:
+  src/generated/graphql.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
-  ./graphql.schema.json:
-    plugins:
-      - "introspection"
+      - 'typescript'
