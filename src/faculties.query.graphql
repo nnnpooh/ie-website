@@ -1,0 +1,17 @@
+query NewQuery {
+  faculties {
+    nodes {
+      faculty_fields {
+        emailJson
+        fieldGroupName
+        firstnameEn
+        firstnameTh
+        lastnameEn
+        lastnameTh
+        phoneJson
+        titleEn
+        titleTh
+      }
+    }
+  }
+}
