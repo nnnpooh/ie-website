@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import '../styles/globals.css';
 import Link from 'next/link';
 import {
   MantineProvider,
@@ -11,7 +12,7 @@ import {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider
-      theme={{ fontFamily: 'Arial' }}
+      theme={{ fontFamily: 'Prompt' }}
       withGlobalStyles
       withNormalizeCSS
     >

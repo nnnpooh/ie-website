@@ -1,10 +1,7 @@
 import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { NextPage } from 'next';
-import {
-  RootQuery,
-  RootQueryToFacultyConnection,
-} from '../src/generated/graphql';
+import { RootQuery } from '../src/generated/graphql';
 import { Card, Title, Text, Badge } from '@mantine/core';
 
 interface props {
@@ -24,10 +21,11 @@ const Faculty: NextPage<props> = ({ data }) => {
     phone: JSON.parse(fac.phoneJson || '[]') as string[],
   }));
 
+  console.log({ data: data.faculties, facs });
   return (
     <>
       {facs?.map((fac) => (
-        <Card shadow='sm' p='lg'>
+        <Card shadow='sm' p='lg' key={fac.id}>
           <Title order={3}>
             {fac.titleEn} {fac.firstnameEn} {fac.lastnameEn}
           </Title>
@@ -42,7 +40,6 @@ const Faculty: NextPage<props> = ({ data }) => {
           </Text>
 
           <Text>
-            {' '}
             {fac.phone.map((el) => (
               <Badge>{el}</Badge>
             ))}
@@ -61,6 +58,7 @@ export async function getStaticProps() {
       query FacultyQuery {
         faculties {
           nodes {
+            content
             databaseId
             faculty_fields {
               emailJson
