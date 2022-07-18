@@ -2539,11 +2539,13 @@ export type FacultyToTermNodeConnectionWhereArgs = {
 /** Field Group */
 export type Faculty_FacultyFields = AcfFieldGroup & {
   __typename?: 'Faculty_FacultyFields';
+  educationJson?: Maybe<Scalars['String']>;
   emailJson?: Maybe<Scalars['String']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']>;
   firstnameEn?: Maybe<Scalars['String']>;
   firstnameTh?: Maybe<Scalars['String']>;
+  isPhd?: Maybe<Scalars['String']>;
   lastnameEn?: Maybe<Scalars['String']>;
   lastnameTh?: Maybe<Scalars['String']>;
   phoneJson?: Maybe<Scalars['String']>;
@@ -5279,7 +5281,7 @@ export enum RelationEnum {
 }
 
 /** The ResearchCenter type */
-export type ResearchCenter = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+export type ResearchCenter = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
   __typename?: 'ResearchCenter';
   /** The content of the post. */
   content?: Maybe<Scalars['String']>;
@@ -5305,12 +5307,6 @@ export type ResearchCenter = ContentNode & DatabaseIdentifier & MenuItemLinkable
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** Connection between the ResearchCenter type and the FacResLink type */
   facResLinks?: Maybe<ResearchCenterToFacResLinkConnection>;
-  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
-  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
-  /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
-  /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']>;
   /** The globally unique identifier of the research_center object. */
@@ -5346,7 +5342,7 @@ export type ResearchCenter = ContentNode & DatabaseIdentifier & MenuItemLinkable
   slug?: Maybe<Scalars['String']>;
   /** The current status of the object */
   status?: Maybe<Scalars['String']>;
-  /** The template assigned to a node of content */
+  /** The template assigned to the node */
   template?: Maybe<ContentTemplate>;
   /** Connection between the ResearchCenter type and the TermNode type */
   terms?: Maybe<ResearchCenterToTermNodeConnection>;

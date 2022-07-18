@@ -2,7 +2,8 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { NextPage } from 'next';
 import { RootQuery } from '../src/generated/graphql';
-import { Card, Title, Text, Badge } from '@mantine/core';
+import { EducationItem } from '../src/types/faculty.types';
+import { Card, Title, Text, Badge, Table } from '@mantine/core';
 
 interface props {
   data: Pick<RootQuery, 'faculties'>;
@@ -19,9 +20,11 @@ const Faculty: NextPage<props> = ({ data }) => {
     ...fac,
     email: JSON.parse(fac.emailJson || '[]') as string[],
     phone: JSON.parse(fac.phoneJson || '[]') as string[],
+    education: JSON.parse(fac.educationJson || '[]') as EducationItem[],
   }));
 
   console.log({ data: data.faculties, facs });
+
   return (
     <>
       {facs?.map((fac) => (
@@ -44,6 +47,36 @@ const Faculty: NextPage<props> = ({ data }) => {
               <Badge>{el}</Badge>
             ))}
           </Text>
+
+          <Table>
+            <thead>
+              <tr>
+                <th>วุฒิการศึกษา / Degree</th>
+                <th>ปี / Year</th>
+                <th>สถาบัน / Institution</th>
+                <th>สาขา / field</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fac.education?.map((ed) => (
+                <tr>
+                  <td>
+                    {ed.degree_th} / {ed.degree_en}
+                  </td>
+                  <td>
+                    {ed.year_graduated_th} / {ed.year_graduated_en}
+                  </td>
+
+                  <td>
+                    {ed.institution_th} / {ed.institution_en}
+                  </td>
+                  <td>
+                    {ed.field_th} / {ed.field_en}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </Card>
       ))}
     </>
@@ -70,6 +103,8 @@ export async function getStaticProps() {
               phoneJson
               titleEn
               titleTh
+              isPhd
+              educationJson
             }
           }
         }
