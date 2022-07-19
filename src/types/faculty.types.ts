@@ -8,3 +8,56 @@ export interface EducationItem {
   field_th: string;
   field_en: string;
 }
+
+export type AcademicRank =
+  | 'lecturer'
+  | 'assistant_professor'
+  | 'associate_professor'
+  | 'professor'
+  | 'professor_emeritus';
+
+export interface AcademicRankItem {
+  key: AcademicRank;
+  textFullTh: string;
+  textAbbreTh: string;
+  textFullEn: string;
+  textAbbreEn: string;
+}
+
+export const academicRankMap: AcademicRankItem[] = [
+  {
+    key: 'lecturer',
+    textFullTh: 'อาจารย์',
+    textAbbreTh: 'อ.',
+    textFullEn: '',
+    textAbbreEn: '',
+  },
+  {
+    key: 'assistant_professor',
+    textFullTh: 'ผู้ช่วยศาสตราจารย์',
+    textAbbreTh: 'ผศ.',
+    textFullEn: 'Assistant Professor',
+    textAbbreEn: 'Asst. Prof.',
+  },
+  {
+    key: 'associate_professor',
+    textFullTh: 'รองศาสตราจารย์',
+    textAbbreTh: 'รศ.',
+    textFullEn: 'Associate Professor',
+    textAbbreEn: 'Assoc. Prof.',
+  },
+  {
+    key: 'professor',
+    textFullTh: 'ศาสตราจารย์',
+    textAbbreTh: 'ศ.',
+    textFullEn: 'Professor',
+    textAbbreEn: 'Prof.',
+  },
+  {
+    key: 'professor_emeritus',
+    textFullTh: 'ศาสตราจารย์เกียรติคุณ',
+    textAbbreTh: 'ศ.(เกียรติคุณ)',
+    textFullEn: 'Emeritus Professor',
+    textAbbreEn: 'Prof. Emer.',
+  },
+];

@@ -1,12 +1,48 @@
+import { FC } from 'react';
 import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { NextPage } from 'next';
-import { RootQuery } from '../src/generated/graphql';
-import { EducationItem } from '../src/types/faculty.types';
+import { RootQuery, Maybe } from '../src/generated/graphql';
+import { EducationItem, academicRankMap } from '../src/types/faculty.types';
 import { Card, Title, Text, Badge, Table } from '@mantine/core';
+import Image from 'next/image';
+import profileDefault from '../public/profile_default.jpg';
 
 interface props {
   data: Pick<RootQuery, 'faculties'>;
+}
+
+function formatJSONArray(s: Maybe<string> | undefined): string[] {
+  return JSON.parse(s || '[]');
+}
+
+function formatJSONEducation(s: Maybe<string> | undefined): EducationItem[] {
+  return JSON.parse(s || '[]') as EducationItem[];
+}
+
+function formatFullNameTh(
+  firstname: Maybe<string> | undefined,
+  lastname: Maybe<string> | undefined,
+  academicRank: Maybe<string> | undefined,
+  isPhd: Maybe<string> | undefined
+) {
+  const rank = academicRankMap.find((rank) => rank.key === academicRank);
+  const title = rank?.textAbbreTh;
+  const phD = isPhd === 'Yes' ? 'ดร.' : '';
+  const fullName = `${title}${phD}${firstname} ${lastname}`;
+  return fullName;
+}
+
+function formatFullNameEn(
+  firstname: Maybe<string> | undefined,
+  lastname: Maybe<string> | undefined,
+  academicRank: Maybe<string> | undefined,
+  nameSuffixEn: Maybe<string> | undefined
+) {
+  const rank = academicRankMap.find((rank) => rank.key === academicRank);
+  const title = rank?.textAbbreEn;
+  const fullName = `${title} ${firstname} ${lastname}, ${nameSuffixEn}`;
+  return fullName;
 }
 
 const Faculty: NextPage<props> = ({ data }) => {
@@ -18,33 +54,67 @@ const Faculty: NextPage<props> = ({ data }) => {
 
   const facs = temp?.map((fac) => ({
     ...fac,
-    email: JSON.parse(fac.emailJson || '[]') as string[],
-    phone: JSON.parse(fac.phoneJson || '[]') as string[],
-    education: JSON.parse(fac.educationJson || '[]') as EducationItem[],
+    email: formatJSONArray(fac.emailJson),
+    phone: formatJSONArray(fac.phoneJson),
+    education: formatJSONEducation(fac.educationJson),
+    fullNameTh: formatFullNameTh(
+      fac.firstnameTh,
+      fac.lastnameTh,
+      fac.academicRank,
+      fac.isPhd
+    ),
+    fullNameEn: formatFullNameEn(
+      fac.firstnameEn,
+      fac.lastnameEn,
+      fac.academicRank,
+      fac.nameSuffixEn
+    ),
   }));
 
-  console.log({ data: data.faculties, facs });
+  console.log({ data: data.faculties, facs, profileDefault });
+
+  const LinkBadge: FC<{ url: Maybe<string> | undefined; name: string }> = ({
+    url,
+    name,
+  }) => {
+    if (!url) return <></>;
+    return (
+      <Badge>
+        <a href={url} target='_blank'>
+          {name}
+        </a>
+      </Badge>
+    );
+  };
 
   return (
     <>
       {facs?.map((fac) => (
         <Card shadow='sm' p='lg' key={fac.id}>
-          <Title order={3}>
-            {fac.titleEn} {fac.firstnameEn} {fac.lastnameEn}
-          </Title>
-          <Text>
-            {fac.titleTh} {fac.firstnameTh} {fac.lastnameTh}
-          </Text>
+          <Card.Section>
+            <img
+              src={fac.profileImage?.sourceUrl || ''}
+              sizes={fac.profileImage?.sizes || ''}
+            />
+          </Card.Section>
 
+          <Title order={3}>{fac.fullNameEn}</Title>
+          <Text>{fac.fullNameTh}</Text>
+
+          {fac.adminPositionTh && (
+            <Text>
+              ({fac.adminPositionTh} / {fac.adminPositionEn})
+            </Text>
+          )}
           <Text>
             {fac.email.map((el) => (
-              <Badge>{el}</Badge>
+              <Badge key={el}>{el}</Badge>
             ))}
           </Text>
 
           <Text>
             {fac.phone.map((el) => (
-              <Badge>{el}</Badge>
+              <Badge key={el}>{el}</Badge>
             ))}
           </Text>
 
@@ -58,8 +128,8 @@ const Faculty: NextPage<props> = ({ data }) => {
               </tr>
             </thead>
             <tbody>
-              {fac.education?.map((ed) => (
-                <tr>
+              {fac.education?.map((ed, idx) => (
+                <tr key={idx}>
                   <td>
                     {ed.degree_th} / {ed.degree_en}
                   </td>
@@ -77,6 +147,12 @@ const Faculty: NextPage<props> = ({ data }) => {
               ))}
             </tbody>
           </Table>
+
+          <LinkBadge url={fac.linkCv} name={'CV'} />
+          <LinkBadge url={fac.linkGoogleScholar} name={'Google Scholar'} />
+          <LinkBadge url={fac.linkResearchGate} name={'Research Gate'} />
+          <LinkBadge url={fac.linkPersonalHomepage} name={'Personal Page'} />
+          <LinkBadge url={fac.linkLinkedin} name={'LinkedIn'} />
         </Card>
       ))}
     </>
@@ -101,10 +177,23 @@ export async function getStaticProps() {
               lastnameEn
               lastnameTh
               phoneJson
-              titleEn
-              titleTh
               isPhd
               educationJson
+              academicRank
+              adminPositionEn
+              adminPositionTh
+              displayOrder
+              linkCv
+              linkGoogleScholar
+              linkPersonalHomepage
+              linkResearchGate
+              nameSuffixEn
+              profileImage {
+                sourceUrl
+                altText
+                sizes
+              }
+              linkLinkedin
             }
           }
         }
