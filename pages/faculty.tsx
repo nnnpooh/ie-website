@@ -80,7 +80,7 @@ const Faculty: NextPage<props> = ({ data }) => {
     if (!url) return <></>;
     return (
       <Badge>
-        <a href={url} target='_blank'>
+        <a href={url} target='_blank' rel='noreferrer'>
           {name}
         </a>
       </Badge>
