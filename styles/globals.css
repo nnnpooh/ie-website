@@ -1,1 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&display=swap');
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* https://stackoverflow.com/questions/64032166/tailwindcss-not-working-with-next-js-what-is-wrong-with-the-configuration */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
