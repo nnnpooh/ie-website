@@ -2539,16 +2539,31 @@ export type FacultyToTermNodeConnectionWhereArgs = {
 /** Field Group */
 export type Faculty_FacultyFields = AcfFieldGroup & {
   __typename?: 'Faculty_FacultyFields';
+  /**
+   * lecturer
+   * assistant_professor
+   * associate_professor
+   * professor
+   */
+  academicPosition?: Maybe<Scalars['String']>;
+  adminPositionEn?: Maybe<Scalars['String']>;
+  adminPositionTh?: Maybe<Scalars['String']>;
   educationJson?: Maybe<Scalars['String']>;
   emailJson?: Maybe<Scalars['String']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']>;
   firstnameEn?: Maybe<Scalars['String']>;
   firstnameTh?: Maybe<Scalars['String']>;
-  isPhd?: Maybe<Scalars['String']>;
+  isPhd?: Maybe<Array<Maybe<Scalars['String']>>>;
   lastnameEn?: Maybe<Scalars['String']>;
   lastnameTh?: Maybe<Scalars['String']>;
+  linkCv?: Maybe<Scalars['String']>;
+  linkGoogleScholar?: Maybe<Scalars['String']>;
+  linkLinkin?: Maybe<Scalars['String']>;
+  linkPersonalHomepage?: Maybe<Scalars['String']>;
+  linkResearchGate?: Maybe<Scalars['String']>;
   phoneJson?: Maybe<Scalars['String']>;
+  profileImage?: Maybe<MediaItem>;
   titleEn?: Maybe<Scalars['String']>;
   titleTh?: Maybe<Scalars['String']>;
 };
