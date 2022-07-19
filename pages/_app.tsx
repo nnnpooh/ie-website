@@ -39,6 +39,12 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <a>Research Center</a>
                   </Link>
                 </li>
+
+                <li>
+                  <Link href='/facebook_feed'>
+                    <a>Facebook Feed</a>
+                  </Link>
+                </li>
               </ul>
             </Navbar>
           }
