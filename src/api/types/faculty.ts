@@ -1,4 +1,10 @@
-import { ResearchCenter_ResearchCenterFields } from '../generated/graphql';
+import {
+  Maybe,
+  Faculty_FacultyFields,
+  ResearchCenter_ResearchCenterFields,
+  ResearchArea,
+} from './graphql';
+
 export interface EducationItem {
   degree_th: string;
   degree_en: string;
@@ -64,5 +70,20 @@ export const academicRankMap: AcademicRankItem[] = [
 ];
 
 export interface ResearchCenter extends ResearchCenter_ResearchCenterFields {
-  id: number;
+  id: string;
+  databaseId: number;
+}
+
+export interface FacultyType extends Faculty_FacultyFields {
+  id: Maybe<string>;
+  databaseId: Maybe<number>;
+  email: string[];
+  phone: string[];
+  adminPositionTh: string[];
+  adminPositionEn: string[];
+  education: EducationItem[];
+  fullNameTh: string;
+  fullNameEn: string;
+  researchCenters: ResearchCenter[];
+  researchAreas: ResearchArea[];
 }

@@ -997,7 +997,9 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   Post = 'POST',
   /** The Type of Content object */
-  ResearchCenter = 'RESEARCH_CENTER'
+  ResearchCenter = 'RESEARCH_CENTER',
+  /** The Type of Content object */
+  Staff = 'STAFF'
 }
 
 /** The Type of Identifier used to fetch a single Content Type node. To be used along with the "id" field. Default is "ID". */
@@ -1442,6 +1444,35 @@ export type CreateResearchCenterPayload = {
   researchCenter?: Maybe<ResearchCenter>;
 };
 
+/** Input for the createStaff mutation */
+export type CreateStaffInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the createStaff mutation */
+export type CreateStaffPayload = {
+  __typename?: 'CreateStaffPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  staff?: Maybe<Staff>;
+};
+
 /** Input for the createTag mutation */
 export type CreateTagInput = {
   /** The slug that the post_tag will be an alias of */
@@ -1767,6 +1798,27 @@ export type DeleteResearchCenterPayload = {
   deletedId?: Maybe<Scalars['ID']>;
   /** The object before it was deleted */
   researchCenter?: Maybe<ResearchCenter>;
+};
+
+/** Input for the deleteStaff mutation */
+export type DeleteStaffInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  /** The ID of the Staff to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deleteStaff mutation */
+export type DeleteStaffPayload = {
+  __typename?: 'DeleteStaffPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The object before it was deleted */
+  staff?: Maybe<Staff>;
 };
 
 /** Input for the deleteTag mutation */
@@ -2688,8 +2740,8 @@ export type FacultyToTermNodeConnectionWhereArgs = {
 export type Faculty_FacultyFields = AcfFieldGroup & {
   __typename?: 'Faculty_FacultyFields';
   academicRank?: Maybe<Scalars['String']>;
-  adminPositionEn?: Maybe<Scalars['String']>;
-  adminPositionTh?: Maybe<Scalars['String']>;
+  adminPositionEnJson?: Maybe<Scalars['String']>;
+  adminPositionThJson?: Maybe<Scalars['String']>;
   displayOrder?: Maybe<Scalars['Float']>;
   educationJson?: Maybe<Scalars['String']>;
   emailJson?: Maybe<Scalars['String']>;
@@ -3405,7 +3457,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkeable Interface */
-export type MenuItemObjectUnion = Category | FacResLink | Faculty | Page | Post | ResearchArea | ResearchCenter | Tag;
+export type MenuItemObjectUnion = Category | FacResLink | Faculty | Page | Post | ResearchArea | ResearchCenter | Staff | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
@@ -6149,6 +6201,8 @@ export type RootMutation = {
   createResearchArea?: Maybe<CreateResearchAreaPayload>;
   /** The payload for the createResearchCenter mutation */
   createResearchCenter?: Maybe<CreateResearchCenterPayload>;
+  /** The payload for the createStaff mutation */
+  createStaff?: Maybe<CreateStaffPayload>;
   /** The payload for the createTag mutation */
   createTag?: Maybe<CreateTagPayload>;
   /** The payload for the createUser mutation */
@@ -6173,6 +6227,8 @@ export type RootMutation = {
   deleteResearchArea?: Maybe<DeleteResearchAreaPayload>;
   /** The payload for the deleteResearchCenter mutation */
   deleteResearchCenter?: Maybe<DeleteResearchCenterPayload>;
+  /** The payload for the deleteStaff mutation */
+  deleteStaff?: Maybe<DeleteStaffPayload>;
   /** The payload for the deleteTag mutation */
   deleteTag?: Maybe<DeleteTagPayload>;
   /** The payload for the deleteUser mutation */
@@ -6209,6 +6265,8 @@ export type RootMutation = {
   updateResearchCenter?: Maybe<UpdateResearchCenterPayload>;
   /** The payload for the updateSettings mutation */
   updateSettings?: Maybe<UpdateSettingsPayload>;
+  /** The payload for the updateStaff mutation */
+  updateStaff?: Maybe<UpdateStaffPayload>;
   /** The payload for the UpdateTag mutation */
   updateTag?: Maybe<UpdateTagPayload>;
   /** The payload for the updateUser mutation */
@@ -6273,6 +6331,12 @@ export type RootMutationCreateResearchAreaArgs = {
 /** The root mutation */
 export type RootMutationCreateResearchCenterArgs = {
   input: CreateResearchCenterInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateStaffArgs = {
+  input: CreateStaffInput;
 };
 
 
@@ -6345,6 +6409,12 @@ export type RootMutationDeleteResearchAreaArgs = {
 /** The root mutation */
 export type RootMutationDeleteResearchCenterArgs = {
   input: DeleteResearchCenterInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteStaffArgs = {
+  input: DeleteStaffInput;
 };
 
 
@@ -6453,6 +6523,12 @@ export type RootMutationUpdateResearchCenterArgs = {
 /** The root mutation */
 export type RootMutationUpdateSettingsArgs = {
   input: UpdateSettingsInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdateStaffArgs = {
+  input: UpdateStaffInput;
 };
 
 
@@ -6573,6 +6649,15 @@ export type RootQuery = {
   researchCenters?: Maybe<RootQueryToResearchCenterConnection>;
   /** Connection between the RootQuery type and the ContentRevisionUnion type */
   revisions?: Maybe<RootQueryToContentRevisionUnionConnection>;
+  /** An object of the Staff Type. บุคลากรฝ่ายสนับสนุน */
+  staff?: Maybe<Staff>;
+  /**
+   * A Staff object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  staffBy?: Maybe<Staff>;
+  /** Connection between the RootQuery type and the Staff type */
+  staffs?: Maybe<RootQueryToStaffConnection>;
   /** A 0bject */
   tag?: Maybe<Tag>;
   /** Connection between the RootQuery type and the tag type */
@@ -6944,6 +7029,33 @@ export type RootQueryRevisionsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<RootQueryToContentRevisionUnionConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryStaffArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  idType?: InputMaybe<StaffIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryStaffByArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  slug?: InputMaybe<Scalars['String']>;
+  staffId?: InputMaybe<Scalars['Int']>;
+  uri?: InputMaybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryStaffsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RootQueryToStaffConnectionWhereArgs>;
 };
 
 
@@ -7988,6 +8100,64 @@ export type RootQueryToResearchCenterConnectionWhereArgs = {
   title?: InputMaybe<Scalars['String']>;
 };
 
+/** Connection between the RootQuery type and the Staff type */
+export type RootQueryToStaffConnection = {
+  __typename?: 'RootQueryToStaffConnection';
+  /** Edges for the RootQueryToStaffConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToStaffConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Staff>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToStaffConnectionEdge = {
+  __typename?: 'RootQueryToStaffConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Staff>;
+};
+
+/** Arguments for filtering the RootQueryToStaffConnection connection */
+export type RootQueryToStaffConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
 /** Connection between the RootQuery type and the tag type */
 export type RootQueryToTagConnection = {
   __typename?: 'RootQueryToTagConnection';
@@ -8288,6 +8458,150 @@ export type Settings = {
   writingSettingsDefaultPostFormat?: Maybe<Scalars['String']>;
   /** Settings of the the boolean Settings Group */
   writingSettingsUseSmilies?: Maybe<Scalars['Boolean']>;
+};
+
+/** The Staff type */
+export type Staff = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
+  __typename?: 'Staff';
+  /** The content of the post. */
+  content?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String'];
+  /** The unique resource identifier path */
+  databaseId: Scalars['Int'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']>;
+  /** The globally unique identifier of the staff object. */
+  id: Scalars['ID'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']>;
+  /** Connection between the Staff type and the Staff type */
+  preview?: Maybe<StaffToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  staffId: Scalars['Int'];
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;staff_fields&quot; was set to Show in GraphQL. */
+  staff_fields?: Maybe<Staff_StaffFields>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']>;
+  /** The template assigned to a node of content */
+  template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The Staff type */
+export type StaffContentArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+
+/** The Staff type */
+export type StaffEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The Staff type */
+export type StaffEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The Staff type */
+export type StaffTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum StaffIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the Staff type and the Staff type */
+export type StaffToPreviewConnectionEdge = {
+  __typename?: 'StaffToPreviewConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<Staff>;
+};
+
+/** Field Group */
+export type Staff_StaffFields = AcfFieldGroup & {
+  __typename?: 'Staff_StaffFields';
+  displayOrder?: Maybe<Scalars['Float']>;
+  emailJson?: Maybe<Scalars['String']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']>;
+  firstnameEn?: Maybe<Scalars['String']>;
+  firstnameTh?: Maybe<Scalars['String']>;
+  lastnameEn?: Maybe<Scalars['String']>;
+  lastnameTh?: Maybe<Scalars['String']>;
+  phoneJson?: Maybe<Scalars['String']>;
+  positionEnJson?: Maybe<Scalars['String']>;
+  positionThJson?: Maybe<Scalars['String']>;
+  profileImage?: Maybe<MediaItem>;
+  titleEn?: Maybe<Scalars['String']>;
+  titleTh?: Maybe<Scalars['String']>;
 };
 
 /** The tag type */
@@ -9231,6 +9545,37 @@ export type UpdateSettingsPayload = {
   readingSettings?: Maybe<ReadingSettings>;
   /** Update the WritingSettings setting. */
   writingSettings?: Maybe<WritingSettings>;
+};
+
+/** Input for the updateStaff mutation */
+export type UpdateStaffInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']>;
+  /** The ID of the Staff object */
+  id: Scalars['ID'];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the updateStaff mutation */
+export type UpdateStaffPayload = {
+  __typename?: 'UpdateStaffPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  staff?: Maybe<Staff>;
 };
 
 /** Input for the UpdateTag mutation */

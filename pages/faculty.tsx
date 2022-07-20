@@ -1,98 +1,21 @@
 import { FC } from 'react';
-import { gql } from '@apollo/client';
-import client from '../apollo-client';
 import { NextPage } from 'next';
-import { RootQuery, Maybe } from '../src/generated/graphql';
-import {
-  EducationItem,
-  academicRankMap,
-  ResearchCenter,
-} from '../src/types/faculty.types';
+import { Maybe } from '../src/api/types/graphql';
 import { Card, Title, Text, Badge, Table, Stack, Select } from '@mantine/core';
-// import Image from 'next/image';
-// import profileDefault from '../public/profile_default.jpg';
+import { FacultyType } from '../src/api/types/faculty';
+import { ResearchAreaType } from '../src/api/types/researchArea';
+import { getFaculties, getResearchAreas } from '../src/api';
 
 interface props {
-  data: Pick<RootQuery, 'faculties'>;
-  dataResearchArea: Pick<RootQuery, 'researchAreas'>;
+  dataFaculties: FacultyType[];
+  dataResearchAreas: ResearchAreaType[];
 }
 
-function formatJSONArray(s: Maybe<string> | undefined): string[] {
-  return JSON.parse(s || '[]');
-}
-
-function formatJSONEducation(s: Maybe<string> | undefined): EducationItem[] {
-  return JSON.parse(s || '[]') as EducationItem[];
-}
-
-function formatFullNameTh(
-  firstname: Maybe<string> | undefined,
-  lastname: Maybe<string> | undefined,
-  academicRank: Maybe<string> | undefined,
-  isPhd: Maybe<string> | undefined
-) {
-  const rank = academicRankMap.find((rank) => rank.key === academicRank);
-  const title = rank?.textAbbreTh;
-  const phD = isPhd === 'Yes' ? 'ดร.' : '';
-  const fullName = `${title}${phD}${firstname} ${lastname}`;
-  return fullName;
-}
-
-function formatFullNameEn(
-  firstname: Maybe<string> | undefined,
-  lastname: Maybe<string> | undefined,
-  academicRank: Maybe<string> | undefined,
-  nameSuffixEn: Maybe<string> | undefined
-) {
-  const rank = academicRankMap.find((rank) => rank.key === academicRank);
-  const title = rank?.textAbbreEn;
-  const fullName = `${title} ${firstname} ${lastname}, ${nameSuffixEn}`;
-  return fullName;
-}
-
-const Faculty: NextPage<props> = ({ data, dataResearchArea }) => {
-  console.log({ data: data.faculties });
-  const temp = data.faculties?.nodes?.map((el) => {
-    let researchCenters: ResearchCenter[] = [];
-    el?.facResLinks?.nodes?.forEach((node1) => {
-      node1?.researchCenters?.nodes?.forEach((node2) => {
-        if (node2?.research_center_fields) {
-          const dt = { ...node2.research_center_fields, id: node2.databaseId };
-          researchCenters.push(dt);
-        }
-      });
-    });
-
-    return {
-      id: el?.databaseId,
-      ...el?.faculty_fields,
-      researchCenters,
-      researchAreas: el?.researchAreas?.nodes?.map((ra) => ({ ...ra })),
-    };
-  });
-
-  const facs = temp?.map((fac) => ({
-    ...fac,
-    email: formatJSONArray(fac.emailJson),
-    phone: formatJSONArray(fac.phoneJson),
-    education: formatJSONEducation(fac.educationJson),
-    fullNameTh: formatFullNameTh(
-      fac.firstnameTh,
-      fac.lastnameTh,
-      fac.academicRank,
-      fac.isPhd
-    ),
-    fullNameEn: formatFullNameEn(
-      fac.firstnameEn,
-      fac.lastnameEn,
-      fac.academicRank,
-      fac.nameSuffixEn
-    ),
-  }));
-
-  const researchAreaOptions = dataResearchArea.researchAreas?.nodes?.map(
-    (node) => ({ ...node })
-  );
+const Faculty: NextPage<props> = ({
+  dataFaculties: facs,
+  dataResearchAreas: resAreas,
+}) => {
+  console.log({ facs, resAreas });
 
   const LinkBadge: FC<{ url: Maybe<string> | undefined; name: string }> = ({
     url,
@@ -112,7 +35,7 @@ const Faculty: NextPage<props> = ({ data, dataResearchArea }) => {
     <Stack spacing={'md'}>
       <Select
         data={
-          researchAreaOptions?.map((ra) => ({
+          resAreas?.map((ra) => ({
             value: ra.name as string,
             label: ra.name as string,
           })) || []
@@ -131,11 +54,14 @@ const Faculty: NextPage<props> = ({ data, dataResearchArea }) => {
           <Title order={3}>{fac.fullNameEn}</Title>
           <Text>{fac.fullNameTh}</Text>
 
-          {fac.adminPositionTh && (
-            <Text>
-              ({fac.adminPositionTh} / {fac.adminPositionEn})
-            </Text>
-          )}
+          {fac.adminPositionTh.map((pos) => (
+            <Text key={pos}>{pos}</Text>
+          ))}
+
+          {fac.adminPositionEn.map((pos) => (
+            <Text key={pos}>{pos}</Text>
+          ))}
+
           <Text>
             {fac.email.map((el) => (
               <Badge key={el}>{el}</Badge>
@@ -218,80 +144,12 @@ const Faculty: NextPage<props> = ({ data, dataResearchArea }) => {
 export default Faculty;
 
 export async function getStaticProps() {
-  const { data } = await client.query<RootQuery>({
-    query: gql`
-      query FacultyQuery {
-        faculties {
-          nodes {
-            content
-            databaseId
-            faculty_fields {
-              emailJson
-              fieldGroupName
-              firstnameEn
-              firstnameTh
-              lastnameEn
-              lastnameTh
-              phoneJson
-              isPhd
-              educationJson
-              academicRank
-              adminPositionEn
-              adminPositionTh
-              displayOrder
-              linkCv
-              linkGoogleScholar
-              linkPersonalHomepage
-              linkResearchGate
-              nameSuffixEn
-              linkLinkedin
-            }
-            researchAreas {
-              nodes {
-                name
-                slug
-                id
-              }
-            }
-            facResLinks {
-              nodes {
-                researchCenters {
-                  nodes {
-                    research_center_fields {
-                      desEn
-                      desTh
-                      fieldGroupName
-                      fullNameEn
-                      fullNameTh
-                    }
-                    databaseId
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-  });
-
-  const { data: dataResearchArea } = await client.query<RootQuery>({
-    query: gql`
-      query ResearchAreaQuery {
-        researchAreas {
-          nodes {
-            name
-            slug
-            id
-          }
-        }
-      }
-    `,
-  });
+  const { data: dataFaculties } = await getFaculties();
+  const { data: dataResearchAreas } = await getResearchAreas();
   return {
     props: {
-      data,
-      dataResearchArea,
+      dataFaculties,
+      dataResearchAreas,
     },
   };
 }

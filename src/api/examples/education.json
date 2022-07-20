@@ -1,0 +1,33 @@
+[
+    {
+      "degree_th": "Doctor of Philosophy",
+      "degree_en": "ปริญญาเอก",
+      "year_graduated_th": 2000,
+      "year_graduated_en": 2543,
+      "institution_th": "Vanderbilt University, TN, USA",
+      "institution_en": "Vanderbilt University, TN, USA",
+      "field_th": "Management of Technology",
+      "field_en": "Management of Technology"
+    },
+    {
+      "degree_th": "Master of Engineering",
+      "degree_en": "ปริญญาโท",
+      "year_graduated_th": 2000,
+      "year_graduated_en": 2543,
+      "institution_th": "Management of Technology",
+      "institution_en": "Management of Technology",
+      "field_th": "Management of Technology",
+      "field_en": "Management of Technology"
+    },
+    {
+      "degree_th": "Master of Engineering",
+      "degree_en": "ปริญญาโท",
+      "year_graduated_th": 2000,
+      "year_graduated_en": 2543,
+      "institution_th": "จุฬาลงกรณ์มหาวิทยาลัย, ประเทศไทย",
+      "institution_en": "จุฬาลงกรณ์มหาวิทยาลัย, ประเทศไทย",
+      "field_th": "Management of Technology",
+      "field_en": "Management of Technology"
+    }
+  ]
+  
