@@ -50,6 +50,7 @@ const Faculty: NextPage<props> = ({ data }) => {
   const temp = data.faculties?.nodes?.map((el) => ({
     id: el?.databaseId,
     ...el?.faculty_fields,
+    researchCenters: el?.facResLinks?.nodes,
   }));
 
   const facs = temp?.map((fac) => ({
@@ -71,7 +72,7 @@ const Faculty: NextPage<props> = ({ data }) => {
     ),
   }));
 
-  console.log({ data: data.faculties, facs, profileDefault });
+  console.log({ data: data.faculties, facs, profileDefault, temp });
 
   const LinkBadge: FC<{ url: Maybe<string> | undefined; name: string }> = ({
     url,
@@ -188,12 +189,29 @@ export async function getStaticProps() {
               linkPersonalHomepage
               linkResearchGate
               nameSuffixEn
-              profileImage {
-                sourceUrl
-                altText
-                sizes
-              }
               linkLinkedin
+            }
+            researchAreas {
+              nodes {
+                name
+                slug
+                id
+              }
+            }
+            facResLinks {
+              nodes {
+                researchCenters {
+                  nodes {
+                    research_center_fields {
+                      fullNameTh
+                      fullNameEn
+                      fieldGroupName
+                      desTh
+                      desEn
+                    }
+                  }
+                }
+              }
             }
           }
         }

@@ -1108,6 +1108,12 @@ export enum ContentTypesOfPostFormatEnum {
   Post = 'POST'
 }
 
+/** Allowed Content Types of the ResearchArea taxonomy. */
+export enum ContentTypesOfResearchAreaEnum {
+  /** The Type of Content object */
+  Faculty = 'FACULTY'
+}
+
 /** Allowed Content Types of the Tag taxonomy. */
 export enum ContentTypesOfTagEnum {
   /** The Type of Content object */
@@ -1213,6 +1219,8 @@ export type CreateFacultyInput = {
   menuOrder?: InputMaybe<Scalars['Int']>;
   /** The password used to protect the content of the object */
   password?: InputMaybe<Scalars['String']>;
+  /** Set connections between the Faculty and ResearchAreas */
+  researchAreas?: InputMaybe<FacultyResearchAreasInput>;
   /** The slug of the object */
   slug?: InputMaybe<Scalars['String']>;
   /** The status of the object */
@@ -1376,6 +1384,31 @@ export type CreatePostPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The Post object mutation type. */
   post?: Maybe<Post>;
+};
+
+/** Input for the createResearchArea mutation */
+export type CreateResearchAreaInput = {
+  /** The slug that the research_area will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the research_area object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The name of the research_area object to mutate */
+  name: Scalars['String'];
+  /** The ID of the research_area that should be set as the parent */
+  parentId?: InputMaybe<Scalars['ID']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the createResearchArea mutation */
+export type CreateResearchAreaPayload = {
+  __typename?: 'CreateResearchAreaPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The created research_area */
+  researchArea?: Maybe<ResearchArea>;
 };
 
 /** Input for the createResearchCenter mutation */
@@ -1694,6 +1727,25 @@ export type DeletePostPayload = {
   deletedId?: Maybe<Scalars['ID']>;
   /** The object before it was deleted */
   post?: Maybe<Post>;
+};
+
+/** Input for the deleteResearchArea mutation */
+export type DeleteResearchAreaInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The ID of the ResearchArea to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deleteResearchArea mutation */
+export type DeleteResearchAreaPayload = {
+  __typename?: 'DeleteResearchAreaPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The deteted term object */
+  researchArea?: Maybe<ResearchArea>;
 };
 
 /** Input for the deleteResearchCenter mutation */
@@ -2303,6 +2355,8 @@ export type Faculty = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node
   previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']>;
+  /** Connection between the Faculty type and the ResearchArea type */
+  researchAreas?: Maybe<FacultyToResearchAreaConnection>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']>;
   /** The current status of the object */
@@ -2353,6 +2407,16 @@ export type FacultyFacResLinksArgs = {
 
 
 /** The Faculty type */
+export type FacultyResearchAreasArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<FacultyToResearchAreaConnectionWhereArgs>;
+};
+
+
+/** The Faculty type */
 export type FacultyTermsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
@@ -2398,6 +2462,26 @@ export enum FacultyIdType {
   /** Identify a resource by the URI. */
   Uri = 'URI'
 }
+
+/** Set relationships between the Faculty to ResearchAreas */
+export type FacultyResearchAreasInput = {
+  /** If true, this will append the ResearchArea to existing related ResearchAreas. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars['Boolean']>;
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<FacultyResearchAreasNodeInput>>>;
+};
+
+/** List of ResearchAreas to connect the Faculty to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export type FacultyResearchAreasNodeInput = {
+  /** The description of the ResearchArea. This field is used to set a description of the ResearchArea if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the ResearchArea. If present, this will be used to connect to the Faculty. If no existing ResearchArea exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars['ID']>;
+  /** The name of the ResearchArea. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars['String']>;
+  /** The slug of the ResearchArea. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars['String']>;
+};
 
 /** Connection between the Faculty type and the FacResLink type */
 export type FacultyToFacResLinkConnection = {
@@ -2468,6 +2552,70 @@ export type FacultyToPreviewConnectionEdge = {
   __typename?: 'FacultyToPreviewConnectionEdge';
   /** The node of the connection, without the edges */
   node?: Maybe<Faculty>;
+};
+
+/** Connection between the Faculty type and the ResearchArea type */
+export type FacultyToResearchAreaConnection = {
+  __typename?: 'FacultyToResearchAreaConnection';
+  /** Edges for the FacultyToResearchAreaConnection connection */
+  edges?: Maybe<Array<Maybe<FacultyToResearchAreaConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<ResearchArea>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type FacultyToResearchAreaConnectionEdge = {
+  __typename?: 'FacultyToResearchAreaConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<ResearchArea>;
+};
+
+/** Arguments for filtering the FacultyToResearchAreaConnection connection */
+export type FacultyToResearchAreaConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Connection between the Faculty type and the TermNode type */
@@ -3257,7 +3405,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkeable Interface */
-export type MenuItemObjectUnion = Category | FacResLink | Faculty | Page | Post | ResearchCenter | Tag;
+export type MenuItemObjectUnion = Category | FacResLink | Faculty | Page | Post | ResearchArea | ResearchCenter | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = {
@@ -5289,6 +5437,351 @@ export enum RelationEnum {
   Or = 'OR'
 }
 
+/** The ResearchArea type */
+export type ResearchArea = DatabaseIdentifier & HierarchicalTermNode & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & {
+  __typename?: 'ResearchArea';
+  /** The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
+  ancestors?: Maybe<ResearchAreaToAncestorsResearchAreaConnection>;
+  /** Connection between the ResearchArea type and the ResearchArea type */
+  children?: Maybe<ResearchAreaToResearchAreaConnection>;
+  /** Connection between the ResearchArea type and the ContentNode type */
+  contentNodes?: Maybe<ResearchAreaToContentNodeConnection>;
+  /** The number of objects connected to the object */
+  count?: Maybe<Scalars['Int']>;
+  /** The unique resource identifier path */
+  databaseId: Scalars['Int'];
+  /** The description of the object */
+  description?: Maybe<Scalars['String']>;
+  /** Connection between the TermNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
+  /** Connection between the TermNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /** Connection between the ResearchArea type and the Faculty type */
+  faculties?: Maybe<ResearchAreaToFacultyConnection>;
+  /** The unique resource identifier path */
+  id: Scalars['ID'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean'];
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean'];
+  /** The link to the term */
+  link?: Maybe<Scalars['String']>;
+  /** The human friendly name of the object. */
+  name?: Maybe<Scalars['String']>;
+  /** Connection between the ResearchArea type and the ResearchArea type */
+  parent?: Maybe<ResearchAreaToParentResearchAreaConnectionEdge>;
+  /** Database id of the parent node */
+  parentDatabaseId?: Maybe<Scalars['Int']>;
+  /** The globally unique identifier of the parent node. */
+  parentId?: Maybe<Scalars['ID']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  researchAreaId?: Maybe<Scalars['Int']>;
+  /** An alphanumeric identifier for the object unique to its type. */
+  slug?: Maybe<Scalars['String']>;
+  /** Connection between the ResearchArea type and the Taxonomy type */
+  taxonomy?: Maybe<ResearchAreaToTaxonomyConnectionEdge>;
+  /** The name of the taxonomy that the object is associated with */
+  taxonomyName?: Maybe<Scalars['String']>;
+  /** The ID of the term group that this term object belongs to */
+  termGroupId?: Maybe<Scalars['Int']>;
+  /** The taxonomy ID that the object is associated with */
+  termTaxonomyId?: Maybe<Scalars['Int']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']>;
+};
+
+
+/** The ResearchArea type */
+export type ResearchAreaAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The ResearchArea type */
+export type ResearchAreaChildrenArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ResearchAreaToResearchAreaConnectionWhereArgs>;
+};
+
+
+/** The ResearchArea type */
+export type ResearchAreaContentNodesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ResearchAreaToContentNodeConnectionWhereArgs>;
+};
+
+
+/** The ResearchArea type */
+export type ResearchAreaEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The ResearchArea type */
+export type ResearchAreaEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The ResearchArea type */
+export type ResearchAreaFacultiesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ResearchAreaToFacultyConnectionWhereArgs>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum ResearchAreaIdType {
+  /** The Database ID for the node */
+  DatabaseId = 'DATABASE_ID',
+  /** The hashed Global ID */
+  Id = 'ID',
+  /** The name of the node */
+  Name = 'NAME',
+  /** Url friendly name of the node */
+  Slug = 'SLUG',
+  /** The URI for the node */
+  Uri = 'URI'
+}
+
+/** Connection between the ResearchArea type and the ResearchArea type */
+export type ResearchAreaToAncestorsResearchAreaConnection = {
+  __typename?: 'ResearchAreaToAncestorsResearchAreaConnection';
+  /** Edges for the ResearchAreaToAncestorsResearchAreaConnection connection */
+  edges?: Maybe<Array<Maybe<ResearchAreaToAncestorsResearchAreaConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<ResearchArea>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type ResearchAreaToAncestorsResearchAreaConnectionEdge = {
+  __typename?: 'ResearchAreaToAncestorsResearchAreaConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<ResearchArea>;
+};
+
+/** Connection between the ResearchArea type and the ContentNode type */
+export type ResearchAreaToContentNodeConnection = {
+  __typename?: 'ResearchAreaToContentNodeConnection';
+  /** Edges for the ResearchAreaToContentNodeConnection connection */
+  edges?: Maybe<Array<Maybe<ResearchAreaToContentNodeConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type ResearchAreaToContentNodeConnectionEdge = {
+  __typename?: 'ResearchAreaToContentNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<ContentNode>;
+};
+
+/** Arguments for filtering the ResearchAreaToContentNodeConnection connection */
+export type ResearchAreaToContentNodeConnectionWhereArgs = {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<Array<InputMaybe<ContentTypesOfResearchAreaEnum>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Connection between the ResearchArea type and the Faculty type */
+export type ResearchAreaToFacultyConnection = {
+  __typename?: 'ResearchAreaToFacultyConnection';
+  /** Edges for the ResearchAreaToFacultyConnection connection */
+  edges?: Maybe<Array<Maybe<ResearchAreaToFacultyConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Faculty>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type ResearchAreaToFacultyConnectionEdge = {
+  __typename?: 'ResearchAreaToFacultyConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Faculty>;
+};
+
+/** Arguments for filtering the ResearchAreaToFacultyConnection connection */
+export type ResearchAreaToFacultyConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: InputMaybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']>;
+};
+
+/** Connection between the ResearchArea type and the ResearchArea type */
+export type ResearchAreaToParentResearchAreaConnectionEdge = {
+  __typename?: 'ResearchAreaToParentResearchAreaConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<ResearchArea>;
+};
+
+/** Connection between the ResearchArea type and the ResearchArea type */
+export type ResearchAreaToResearchAreaConnection = {
+  __typename?: 'ResearchAreaToResearchAreaConnection';
+  /** Edges for the ResearchAreaToResearchAreaConnection connection */
+  edges?: Maybe<Array<Maybe<ResearchAreaToResearchAreaConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<ResearchArea>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type ResearchAreaToResearchAreaConnectionEdge = {
+  __typename?: 'ResearchAreaToResearchAreaConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<ResearchArea>;
+};
+
+/** Arguments for filtering the ResearchAreaToResearchAreaConnection connection */
+export type ResearchAreaToResearchAreaConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Connection between the ResearchArea type and the Taxonomy type */
+export type ResearchAreaToTaxonomyConnectionEdge = {
+  __typename?: 'ResearchAreaToTaxonomyConnectionEdge';
+  /** The node of the connection, without the edges */
+  node?: Maybe<Taxonomy>;
+};
+
 /** The ResearchCenter type */
 export type ResearchCenter = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
   __typename?: 'ResearchCenter';
@@ -5347,6 +5840,8 @@ export type ResearchCenter = ContentNode & DatabaseIdentifier & MenuItemLinkable
    * @deprecated Deprecated in favor of the databaseId field
    */
   researchCenterId: Scalars['Int'];
+  /** Added to the GraphQL Schema because the ACF Field Group &quot;research_center_fields&quot; was set to Show in GraphQL. */
+  research_center_fields?: Maybe<ResearchCenter_ResearchCenterFields>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']>;
   /** The current status of the object */
@@ -5580,6 +6075,17 @@ export type ResearchCenterToTermNodeConnectionWhereArgs = {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Field Group */
+export type ResearchCenter_ResearchCenterFields = AcfFieldGroup & {
+  __typename?: 'ResearchCenter_ResearchCenterFields';
+  desEn?: Maybe<Scalars['String']>;
+  desTh?: Maybe<Scalars['String']>;
+  /** The name of the ACF Field Group */
+  fieldGroupName?: Maybe<Scalars['String']>;
+  fullNameEn?: Maybe<Scalars['String']>;
+  fullNameTh?: Maybe<Scalars['String']>;
+};
+
 /** Input for the resetUserPassword mutation */
 export type ResetUserPasswordInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -5639,6 +6145,8 @@ export type RootMutation = {
   createPost?: Maybe<CreatePostPayload>;
   /** The payload for the createPostFormat mutation */
   createPostFormat?: Maybe<CreatePostFormatPayload>;
+  /** The payload for the createResearchArea mutation */
+  createResearchArea?: Maybe<CreateResearchAreaPayload>;
   /** The payload for the createResearchCenter mutation */
   createResearchCenter?: Maybe<CreateResearchCenterPayload>;
   /** The payload for the createTag mutation */
@@ -5661,6 +6169,8 @@ export type RootMutation = {
   deletePost?: Maybe<DeletePostPayload>;
   /** The payload for the deletePostFormat mutation */
   deletePostFormat?: Maybe<DeletePostFormatPayload>;
+  /** The payload for the deleteResearchArea mutation */
+  deleteResearchArea?: Maybe<DeleteResearchAreaPayload>;
   /** The payload for the deleteResearchCenter mutation */
   deleteResearchCenter?: Maybe<DeleteResearchCenterPayload>;
   /** The payload for the deleteTag mutation */
@@ -5693,6 +6203,8 @@ export type RootMutation = {
   updatePost?: Maybe<UpdatePostPayload>;
   /** The payload for the UpdatePostFormat mutation */
   updatePostFormat?: Maybe<UpdatePostFormatPayload>;
+  /** The payload for the UpdateResearchArea mutation */
+  updateResearchArea?: Maybe<UpdateResearchAreaPayload>;
   /** The payload for the updateResearchCenter mutation */
   updateResearchCenter?: Maybe<UpdateResearchCenterPayload>;
   /** The payload for the updateSettings mutation */
@@ -5749,6 +6261,12 @@ export type RootMutationCreatePostArgs = {
 /** The root mutation */
 export type RootMutationCreatePostFormatArgs = {
   input: CreatePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateResearchAreaArgs = {
+  input: CreateResearchAreaInput;
 };
 
 
@@ -5815,6 +6333,12 @@ export type RootMutationDeletePostArgs = {
 /** The root mutation */
 export type RootMutationDeletePostFormatArgs = {
   input: DeletePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteResearchAreaArgs = {
+  input: DeleteResearchAreaInput;
 };
 
 
@@ -5911,6 +6435,12 @@ export type RootMutationUpdatePostArgs = {
 /** The root mutation */
 export type RootMutationUpdatePostFormatArgs = {
   input: UpdatePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdateResearchAreaArgs = {
+  input: UpdateResearchAreaInput;
 };
 
 
@@ -6028,6 +6558,10 @@ export type RootQuery = {
   registeredScripts?: Maybe<RootQueryToEnqueuedScriptConnection>;
   /** Connection between the RootQuery type and the EnqueuedStylesheet type */
   registeredStylesheets?: Maybe<RootQueryToEnqueuedStylesheetConnection>;
+  /** A 0bject */
+  researchArea?: Maybe<ResearchArea>;
+  /** Connection between the RootQuery type and the ResearchArea type */
+  researchAreas?: Maybe<RootQueryToResearchAreaConnection>;
   /** An object of the ResearchCenter Type.  */
   researchCenter?: Maybe<ResearchCenter>;
   /**
@@ -6356,6 +6890,23 @@ export type RootQueryRegisteredStylesheetsArgs = {
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryResearchAreaArgs = {
+  id: Scalars['ID'];
+  idType?: InputMaybe<ResearchAreaIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryResearchAreasArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<RootQueryToResearchAreaConnectionWhereArgs>;
 };
 
 
@@ -7315,6 +7866,70 @@ export type RootQueryToPostFormatConnectionWhereArgs = {
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Connection between the RootQuery type and the ResearchArea type */
+export type RootQueryToResearchAreaConnection = {
+  __typename?: 'RootQueryToResearchAreaConnection';
+  /** Edges for the RootQueryToResearchAreaConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToResearchAreaConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<ResearchArea>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToResearchAreaConnectionEdge = {
+  __typename?: 'RootQueryToResearchAreaConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<ResearchArea>;
+};
+
+/** Arguments for filtering the RootQueryToResearchAreaConnection connection */
+export type RootQueryToResearchAreaConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+};
+
 /** Connection between the RootQuery type and the ResearchCenter type */
 export type RootQueryToResearchCenterConnection = {
   __typename?: 'RootQueryToResearchCenterConnection';
@@ -7990,6 +8605,8 @@ export enum TaxonomyEnum {
   Facreslink = 'FACRESLINK',
   /** Taxonomy enum post_format */
   Postformat = 'POSTFORMAT',
+  /** Taxonomy enum research_area */
+  Researcharea = 'RESEARCHAREA',
   /** Taxonomy enum post_tag */
   Tag = 'TAG'
 }
@@ -8322,6 +8939,8 @@ export type UpdateFacultyInput = {
   menuOrder?: InputMaybe<Scalars['Int']>;
   /** The password used to protect the content of the object */
   password?: InputMaybe<Scalars['String']>;
+  /** Set connections between the Faculty and ResearchAreas */
+  researchAreas?: InputMaybe<FacultyResearchAreasInput>;
   /** The slug of the object */
   slug?: InputMaybe<Scalars['String']>;
   /** The status of the object */
@@ -8493,6 +9112,33 @@ export type UpdatePostPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The Post object mutation type. */
   post?: Maybe<Post>;
+};
+
+/** Input for the UpdateResearchArea mutation */
+export type UpdateResearchAreaInput = {
+  /** The slug that the research_area will be an alias of */
+  aliasOf?: InputMaybe<Scalars['String']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']>;
+  /** The description of the research_area object */
+  description?: InputMaybe<Scalars['String']>;
+  /** The ID of the ResearchArea object to update */
+  id: Scalars['ID'];
+  /** The name of the research_area object to mutate */
+  name?: InputMaybe<Scalars['String']>;
+  /** The ID of the research_area that should be set as the parent */
+  parentId?: InputMaybe<Scalars['ID']>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars['String']>;
+};
+
+/** The payload for the UpdateResearchArea mutation */
+export type UpdateResearchAreaPayload = {
+  __typename?: 'UpdateResearchAreaPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The created research_area */
+  researchArea?: Maybe<ResearchArea>;
 };
 
 /** Input for the updateResearchCenter mutation */
