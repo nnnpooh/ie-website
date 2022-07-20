@@ -1,3 +1,4 @@
+import { ResearchCenter_ResearchCenterFields } from '../generated/graphql';
 export interface EducationItem {
   degree_th: string;
   degree_en: string;
@@ -61,3 +62,7 @@ export const academicRankMap: AcademicRankItem[] = [
     textAbbreEn: 'Prof. Emer.',
   },
 ];
+
+export interface ResearchCenter extends ResearchCenter_ResearchCenterFields {
+  id: number;
+}
