@@ -48,13 +48,13 @@ export async function getFaculties() {
     `,
   });
 
-  const dataOut = data.faculties?.nodes?.map( el=> formatFacultyData(el))
+  const dataOut = data.faculties?.nodes?.map((el) => formatFacultyData(el));
 
-  return { data: dataOut || [] as FacultyType[]}
+  return { data: dataOut || ([] as FacultyType[]) };
 }
 
 export async function getFacultyByDatabaseId(databaseId: number) {
-  const { data } = await client.query<{faculty: RootQuery["faculty"]}>({
+  const { data } = await client.query<{ faculty: RootQuery['faculty'] }>({
     query: gql`
       ${FACULTY_FRAGMENT}
       ${RESEARCH_AREA_FRAGMENT}
@@ -90,35 +90,38 @@ export async function getFacultyByDatabaseId(databaseId: number) {
     `,
   });
 
-  const dataOut =  formatFacultyData(data?.faculty)
-  return { data: dataOut}
+  const dataOut = formatFacultyData(data?.faculty);
+  console.log({ data, dataOut });
+  return { data: dataOut };
 }
 
-
-function formatFacultyData(data : Maybe<Faculty> | undefined) {
-
-    let researchCenters: unknown[] = [];
-    data?.facResLinks?.nodes?.forEach((node1) => {
-      node1?.researchCenters?.nodes?.forEach((node2) => {
-        if (node2?.research_center_fields) {
-          const dt = {
-            ...node2.research_center_fields,
-            id: node2.id,
-            databaseId: node2.databaseId,
-          };
-          researchCenters.push(dt);
-        }
-      });
+function formatFacultyData(data: Maybe<Faculty> | undefined) {
+  if (!data) return {} as FacultyType;
+  // Format research centers
+  let researchCenters: unknown[] = [];
+  data?.facResLinks?.nodes?.forEach((node1) => {
+    node1?.researchCenters?.nodes?.forEach((node2) => {
+      if (node2?.research_center_fields) {
+        const dt = {
+          ...node2.research_center_fields,
+          id: node2.id,
+          databaseId: node2.databaseId,
+        };
+        researchCenters.push(dt);
+      }
     });
+  });
 
-    const fac = {
-      ...data?.faculty_fields,
-      id: data?.id,
-      databaseId: data?.databaseId,
-      researchCenters: researchCenters as ResearchCenter[],
-      researchAreas: data?.researchAreas?.nodes?.map((ra) => ({ ...ra })),
-    };
+  //  Flatten object
+  const fac = {
+    ...data?.faculty_fields,
+    id: data?.id,
+    databaseId: data?.databaseId,
+    researchCenters: researchCenters as ResearchCenter[],
+    researchAreas: data?.researchAreas?.nodes?.map((ra) => ({ ...ra })),
+  };
 
+  //  Add extra field
   const dataOut: unknown = {
     ...fac,
     email: formatJSONArray(fac.emailJson),
@@ -140,7 +143,7 @@ function formatFacultyData(data : Maybe<Faculty> | undefined) {
     ),
   };
 
-  return dataOut as FacultyType
+  return dataOut as FacultyType;
 }
 
 function formatJSONArray(s: Maybe<string> | undefined): string[] {

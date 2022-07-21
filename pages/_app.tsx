@@ -29,8 +29,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </li>
 
                 <li>
-                  <Link href='/faculty'>
-                    <a>Faculty</a>
+                  <Link href='/faculties'>
+                    <a>Faculty (All)</a>
                   </Link>
                 </li>
 

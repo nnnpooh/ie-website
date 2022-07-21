@@ -15,7 +15,7 @@ interface props {
   dataResearchAreas: ResearchAreaType[];
 }
 
-const Faculty: NextPage<props> = ({
+const Faculties: NextPage<props> = ({
   dataFaculties: facs,
   dataResearchAreas: resAreas,
 }) => {
@@ -122,7 +122,7 @@ const Faculty: NextPage<props> = ({
               <Badge
                 variant='gradient'
                 gradient={{ from: 'orange', to: 'red' }}
-                key={rc.id}
+                key={rc.databaseId}
               >
                 {rc.fullNameEn}
               </Badge>
@@ -135,17 +135,21 @@ const Faculty: NextPage<props> = ({
             <Badge
               variant='gradient'
               gradient={{ from: 'teal', to: 'blue', deg: 60 }}
+              key={ra.name}
             >
               {ra.name}
             </Badge>
           ))}
+
+          <Title order={4}>More Details</Title>
+          <a href={`/faculty/${fac.databaseId}`}>Link</a>
         </Card>
       ))}
     </Stack>
   );
 };
 
-export default Faculty;
+export default Faculties;
 
 export async function getStaticProps() {
   const { data: dataFaculties } = await getFaculties();

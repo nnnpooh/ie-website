@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { NextPage } from 'next';
-import { RootQuery, Maybe } from '../src/generated/graphql';
+import { RootQuery, Maybe } from '../src/api/types/graphql';
 import { Card, Title, Text, Badge, Table } from '@mantine/core';
 import Image from 'next/image';
 import profileDefault from '../public/profile_default.jpg';
@@ -26,7 +26,9 @@ const ResearchCenter: NextPage<props> = ({ data }) => {
     <>
       <div
         className='prose prose-img:rounded-xl prose-headings:underline prose-a:text-blue-600'
-        dangerouslySetInnerHTML={{ __html: reses[0].content }}
+        dangerouslySetInnerHTML={{
+          __html: reses ? (reses[0].content as string) : '',
+        }}
       />
     </>
   );
