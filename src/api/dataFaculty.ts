@@ -15,7 +15,7 @@ export async function getFaculties() {
       ${FACULTY_FRAGMENT}
       ${RESEARCH_AREA_FRAGMENT}
       ${RESEACH_CENTER_FRAGMENT}
-      query FacultyQuery {
+      query FacultiesQuery {
         faculties {
           nodes {
             content
@@ -94,6 +94,46 @@ export async function getFaculties() {
   }));
 
   return { data: facs as FacultyType };
+}
+
+export async function getFacultyByDatabaseId(databaseId: number) {
+  const { data } = await client.query<RootQuery>({
+    query: gql`
+      ${FACULTY_FRAGMENT}
+      ${RESEARCH_AREA_FRAGMENT}
+      ${RESEACH_CENTER_FRAGMENT}
+      query Faculty($id: ID = ${databaseId}, $idType: FacultyIdType = DATABASE_ID) {
+        faculty(idType: $idType, id: $id) {
+          databaseId
+          id
+          content
+          faculty_fields {
+            ...Faculty_FacultyFieldsFragment
+          }
+          researchAreas {
+            nodes {
+              ...ResearchAreaFragment
+            }
+          }
+          facResLinks {
+            nodes {
+              researchCenters {
+                nodes {
+                  databaseId
+                  id
+                  research_center_fields {
+                    ...ResearchCenter_ResearchCenterFieldsFragment
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  console.log({ data });
 }
 
 function formatJSONArray(s: Maybe<string> | undefined): string[] {

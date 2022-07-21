@@ -4,7 +4,11 @@ import { Maybe } from '../src/api/types/graphql';
 import { Card, Title, Text, Badge, Table, Stack, Select } from '@mantine/core';
 import { FacultyType } from '../src/api/types/faculty';
 import { ResearchAreaType } from '../src/api/types/researchArea';
-import { getFaculties, getResearchAreas } from '../src/api';
+import {
+  getFaculties,
+  getResearchAreas,
+  getFacultyByDatabaseId,
+} from '../src/api';
 
 interface props {
   dataFaculties: FacultyType[];
@@ -15,7 +19,7 @@ const Faculty: NextPage<props> = ({
   dataFaculties: facs,
   dataResearchAreas: resAreas,
 }) => {
-  console.log({ facs, resAreas });
+  // console.log({ facs, resAreas });
 
   const LinkBadge: FC<{ url: Maybe<string> | undefined; name: string }> = ({
     url,
@@ -146,6 +150,7 @@ export default Faculty;
 export async function getStaticProps() {
   const { data: dataFaculties } = await getFaculties();
   const { data: dataResearchAreas } = await getResearchAreas();
+  getFacultyByDatabaseId(6);
   return {
     props: {
       dataFaculties,
