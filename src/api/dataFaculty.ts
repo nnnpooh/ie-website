@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
-import { RootQuery, Maybe, ResearchCenter } from './types/graphql';
+import { RootQuery, Maybe, ResearchCenter, Faculty } from './types/graphql';
 import {
   FACULTY_FRAGMENT,
   RESEARCH_AREA_FRAGMENT,
@@ -48,56 +48,13 @@ export async function getFaculties() {
     `,
   });
 
-  const temp = data.faculties?.nodes?.map((el) => {
-    let researchCenters: unknown[] = [];
-    el?.facResLinks?.nodes?.forEach((node1) => {
-      node1?.researchCenters?.nodes?.forEach((node2) => {
-        if (node2?.research_center_fields) {
-          const dt = {
-            ...node2.research_center_fields,
-            id: node2.id,
-            databaseId: node2.databaseId,
-          };
-          researchCenters.push(dt);
-        }
-      });
-    });
+  const dataOut = data.faculties?.nodes?.map( el=> formatFacultyData(el))
 
-    return {
-      ...el?.faculty_fields,
-      id: el?.id,
-      databaseId: el?.databaseId,
-      researchCenters: researchCenters as ResearchCenter[],
-      researchAreas: el?.researchAreas?.nodes?.map((ra) => ({ ...ra })),
-    };
-  });
-
-  const facs: unknown = temp?.map((fac) => ({
-    ...fac,
-    email: formatJSONArray(fac.emailJson),
-    phone: formatJSONArray(fac.phoneJson),
-    adminPositionTh: formatJSONArray(fac.adminPositionThJson),
-    adminPositionEn: formatJSONArray(fac.adminPositionEnJson),
-    education: formatJSONEducation(fac.educationJson),
-    fullNameTh: formatFullNameTh(
-      fac.firstnameTh,
-      fac.lastnameTh,
-      fac.academicRank,
-      fac.isPhd
-    ),
-    fullNameEn: formatFullNameEn(
-      fac.firstnameEn,
-      fac.lastnameEn,
-      fac.academicRank,
-      fac.nameSuffixEn
-    ),
-  }));
-
-  return { data: facs as FacultyType };
+  return { data: dataOut || [] as FacultyType[]}
 }
 
 export async function getFacultyByDatabaseId(databaseId: number) {
-  const { data } = await client.query<RootQuery>({
+  const { data } = await client.query<{faculty: RootQuery["faculty"]}>({
     query: gql`
       ${FACULTY_FRAGMENT}
       ${RESEARCH_AREA_FRAGMENT}
@@ -133,7 +90,57 @@ export async function getFacultyByDatabaseId(databaseId: number) {
     `,
   });
 
-  console.log({ data });
+  const dataOut =  formatFacultyData(data?.faculty)
+  return { data: dataOut}
+}
+
+
+function formatFacultyData(data : Maybe<Faculty> | undefined) {
+
+    let researchCenters: unknown[] = [];
+    data?.facResLinks?.nodes?.forEach((node1) => {
+      node1?.researchCenters?.nodes?.forEach((node2) => {
+        if (node2?.research_center_fields) {
+          const dt = {
+            ...node2.research_center_fields,
+            id: node2.id,
+            databaseId: node2.databaseId,
+          };
+          researchCenters.push(dt);
+        }
+      });
+    });
+
+    const fac = {
+      ...data?.faculty_fields,
+      id: data?.id,
+      databaseId: data?.databaseId,
+      researchCenters: researchCenters as ResearchCenter[],
+      researchAreas: data?.researchAreas?.nodes?.map((ra) => ({ ...ra })),
+    };
+
+  const dataOut: unknown = {
+    ...fac,
+    email: formatJSONArray(fac.emailJson),
+    phone: formatJSONArray(fac.phoneJson),
+    adminPositionTh: formatJSONArray(fac.adminPositionThJson),
+    adminPositionEn: formatJSONArray(fac.adminPositionEnJson),
+    education: formatJSONEducation(fac.educationJson),
+    fullNameTh: formatFullNameTh(
+      fac.firstnameTh,
+      fac.lastnameTh,
+      fac.academicRank,
+      fac.isPhd
+    ),
+    fullNameEn: formatFullNameEn(
+      fac.firstnameEn,
+      fac.lastnameEn,
+      fac.academicRank,
+      fac.nameSuffixEn
+    ),
+  };
+
+  return dataOut as FacultyType
 }
 
 function formatJSONArray(s: Maybe<string> | undefined): string[] {
