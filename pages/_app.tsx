@@ -1,17 +1,11 @@
+import "../styles/globals.css";
 import Head from "next/head";
-import Image from "next/image";
 import { NextSeo } from "next-seo";
 import Navbar from "../components/layouts/Navbar";
-import Carousel from "../components/layouts/Carousel";
-import HomeNews from "../components/news/HomeNews";
 import Footer from "../components/layouts/Footer";
-import HomeCurriculum from "../components/curriculum/HomeCurriculum";
-import ExternalLink from "../components/layouts/ExternalLink";
-import HomeResearch from "../components/research/HomeResearch";
-import Partner from "../components/layouts/Partner";
-export default function Home() {
+function MyApp({ Component, pageProps }) {
   return (
-    <div>
+    <>
       <Head>
         <link rel="icon" href="/industrial_engineering_logo.ico" />
         <meta charSet="UTF-8" />
@@ -31,28 +25,12 @@ export default function Home() {
         }}
       />
       <Navbar />
-
       <main>
-        <Carousel />
-
-        <div>
-          <HomeNews />
-        </div>
-        <div>
-          <HomeCurriculum />
-        </div>
-        <div>
-          <ExternalLink />
-        </div>
-        <div>
-          <HomeResearch />
-        </div>
-        <div>
-          <Partner />
-        </div>
+      <Component {...pageProps} />
       </main>
-
       <Footer />
-    </div>
+    </>
   );
 }
+
+export default MyApp;
