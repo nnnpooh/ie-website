@@ -1,0 +1,6 @@
+overwrite: true
+schema: "http://35.213.138.100/graphql"
+generates:
+  src/api/types/graphql.ts:
+    plugins:
+      - "typescript"

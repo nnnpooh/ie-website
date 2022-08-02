@@ -1,10 +1,23 @@
-import Head from "next/head";
-import { NextSeo } from "next-seo";
-import Navbar from "../../../components/layouts/Navbar";
-import Footer from "../../../components/layouts/Footer";
 import FacultyMemberCard from "../../../components/member/FacultyMemberCard";
+import { FacultyType } from '../src/api/types/faculty';
+import { ResearchAreaType } from '../src/api/types/researchArea';
+import {
+  getFaculties,
+  getResearchAreas,
+  getFacultyByDatabaseId,
+} from '../../../src/api';
+import { NextPage } from 'next';
 
-function FacultyMemberPage() {
+interface props {
+  dataFaculties: FacultyType[];
+  dataResearchAreas: ResearchAreaType[];
+}
+
+const FacultyMemberPage: NextPage<props> = ({
+  dataFaculties: facs,
+  dataResearchAreas: resAreas,
+}) => {
+  console.log({ facs, resAreas });
   return (
     <div>
       <div className="contact_container">
@@ -56,3 +69,15 @@ function FacultyMemberPage() {
 }
 
 export default FacultyMemberPage;
+
+export async function getStaticProps() {
+  const { data: dataFaculties } = await getFaculties();
+  const { data: dataResearchAreas } = await getResearchAreas();
+  getFacultyByDatabaseId(6);
+  return {
+    props: {
+      dataFaculties,
+      dataResearchAreas,
+    },
+  };
+}
