@@ -1,12 +1,12 @@
 import FacultyMemberCard from "../../../components/member/FacultyMemberCard";
-import { FacultyType } from '../src/api/types/faculty';
-import { ResearchAreaType } from '../src/api/types/researchArea';
+import { FacultyType } from "../src/api/types/faculty";
+import { ResearchAreaType } from "../src/api/types/researchArea";
 import {
   getFaculties,
   getResearchAreas,
   getFacultyByDatabaseId,
-} from '../../../src/api';
-import { NextPage } from 'next';
+} from "../../../src/api";
+import { NextPage } from "next";
 
 interface props {
   dataFaculties: FacultyType[];
@@ -26,47 +26,16 @@ const FacultyMemberPage: NextPage<props> = ({
         </div>
 
         <div className="mt-4 flex flex-wrap">
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <FacultyMemberCard />
-          </div>
+          {facs?.map((fac) => (
+            <div className="md:w-1/3 p-4">
+              <FacultyMemberCard item={fac}/>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default FacultyMemberPage;
 
