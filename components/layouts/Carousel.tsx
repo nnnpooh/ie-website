@@ -1,31 +1,37 @@
+import Image from 'next/image';
+
 function Carousel() {
   return (
     <div id='default-carousel' className='relative' data-carousel='static'>
       <div className='overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96'>
-        <div className=' duration-700 ease-in-out' data-carousel-item>
+        <div className='duration-700 ease-in-out data-carousel-item'>
           <span className='absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800'>
             First Slide
           </span>
-          <img
+          <Image
             src='/images/keyvisual_background-01.jpg'
-            className='block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2'
             alt='...'
+            objectFit='cover'
+            layout='fill'
           />
         </div>
 
         <div className='hidden duration-700 ease-in-out' data-carousel-item>
-          <img
+          <Image
             src='/docs/images/carousel/carousel-2.svg'
-            className='block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2'
             alt='...'
+            objectFit='cover'
+            layout='fill'
           />
         </div>
 
         <div className='hidden duration-700 ease-in-out' data-carousel-item>
-          <img
+          <Image
             src='/docs/images/carousel/carousel-3.svg'
             className='block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2'
             alt='...'
+            objectFit='cover'
+            layout='fill'
           />
         </div>
       </div>
@@ -68,9 +74,9 @@ function Carousel() {
             xmlns='http://www.w3.org/2000/svg'
           >
             <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
               d='M15 19l-7-7 7-7'
             ></path>
           </svg>
@@ -91,9 +97,9 @@ function Carousel() {
             xmlns='http://www.w3.org/2000/svg'
           >
             <path
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              stroke-width='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
               d='M9 5l7 7-7 7'
             ></path>
           </svg>
