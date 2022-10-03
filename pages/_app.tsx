@@ -3,6 +3,8 @@ import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
+import { MantineProvider } from '@mantine/core';
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -23,11 +25,20 @@ function MyApp({ Component, pageProps }) {
           type: 'website',
         }}
       />
-      <Navbar />
-      <main>
-        <Component {...pageProps} />
-      </main>
-      <Footer />
+
+      <MantineProvider
+        theme={{
+          /** Put your mantine theme override here */
+          colorScheme: 'light',
+          fontFamily: 'Prompt',
+        }}
+      >
+        <Navbar />
+        <main>
+          <Component {...pageProps} />
+        </main>
+        <Footer />
+      </MantineProvider>
     </>
   );
 }
