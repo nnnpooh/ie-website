@@ -1,33 +1,32 @@
 import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
-function FacultyMemberCard(item) {
-  const fac = item.item;
+import { Card } from "@mantine/core";
+import { FacultyType } from "@/src/api/types/manual";
+
+interface Props {
+  fac: FacultyType;
+}
+const FacultyMemberCard: FC<Props> = ({ fac }) => {
   return (
-    <div className="flex flex-col bg-white p-4">
-      <Link href={`/member/faculty/${fac.id}`}>
-        <a className="relative h-60">
+    <Card shadow="sm" p="lg" radius="md" withBorder>
+      <Card.Section>
+        <div className="relative h-80 w-full bg-red-300">
           <Image
             src={fac.profileImage?.sourceUrl || ""}
             layout="fill"
-            objectFit="contain"
+            objectFit="cover"
             alt="..."
           />
-        </a>
-      </Link>
+        </div>
+      </Card.Section>
       <div className="mt-4">
         <h3>Associate Professor</h3>
         <h3>{fac.fullNameEn}</h3>
         <h3>{fac.adminPositionEn}</h3>
-        {/* {fac.email.map((el) => (
-          <p>{el}</p>
-        ))}
-        {fac.phone.map((el) => (
-          <p>{el}</p>
-        ))} */}
       </div>
-    </div>
+    </Card>
   );
-}
+};
 
 export default FacultyMemberCard;

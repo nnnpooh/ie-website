@@ -46,6 +46,7 @@ function MyApp({ Component, pageProps }) {
             ],
           },
           primaryColor: "cmu",
+          headings: { fontFamily: "Prompt" },
         }}
       >
         <Navbar />
