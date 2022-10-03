@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Button, Menu, Container, Switch } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 
-import { IconSettings, IconChevronDown } from "@tabler/icons";
+import { IconChevronDown, IconSchool, IconUsers } from "@tabler/icons";
 
 const Navbar: FC = () => {
   const [value, toggle] = useToggle(["th", "en"]);
@@ -62,6 +62,7 @@ const Navbar: FC = () => {
           <div className="flex gap-3">
             {/* Buttons */}
             <div>
+              {/* Home */}
               <Button.Group>
                 <Button
                   className={`${path === "/" ? bgActive : bg} ${bgHover}`}
@@ -71,14 +72,47 @@ const Navbar: FC = () => {
                 >
                   {t("home")}
                 </Button>
-                <Button
-                  className={`${path === "/about" ? bgActive : bg} ${bgHover}`}
-                  onClick={() => {
-                    router.push("/about");
-                  }}
-                >
-                  {t("about")}
-                </Button>
+                {/* About */}
+                <Menu shadow="md" width={200} trigger="hover">
+                  <Menu.Target>
+                    <Button
+                      className={`${
+                        path === "/about" ? bgActive : bg
+                      } ${bgHover}`}
+                    >
+                      {t("about")}
+                    </Button>
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Label>{t("about")}</Menu.Label>
+                    <Menu.Item
+                      icon={<IconSchool size={14} />}
+                      onClick={() => {
+                        router.push("/about");
+                      }}
+                    >
+                      {t("about-department")}
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<IconUsers size={14} />}
+                      onClick={() => {
+                        router.push("/people/faculty");
+                      }}
+                    >
+                      {t("about-faculty")}
+                    </Menu.Item>
+                    <Menu.Item icon={<IconUsers size={14} />}>
+                      {t("about-staff")}
+                    </Menu.Item>
+                    <Menu.Item icon={<IconUsers size={14} />}>
+                      {t("about-admin")}
+                    </Menu.Item>
+                    <Menu.Item icon={<IconUsers size={14} />}>
+                      {t("about-retired")}
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
+                {/* Curriculum */}
                 <Menu shadow="md" width={200} trigger="hover">
                   <Menu.Target>
                     <Button
@@ -94,9 +128,7 @@ const Navbar: FC = () => {
                   </Menu.Target>
                   <Menu.Dropdown>
                     <Menu.Label>Application</Menu.Label>
-                    <Menu.Item icon={<IconSettings size={14} />}>
-                      Settings
-                    </Menu.Item>
+                    <Menu.Item>Settings</Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
               </Button.Group>

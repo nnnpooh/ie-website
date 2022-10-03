@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client';
-import client from '../../apollo-client';
-import { RESEARCH_AREA_FRAGMENT } from './graphql/fragments';
-import { ResearchAreaType } from './types/researchArea';
-import { RootQuery } from './types/graphql';
+import { gql } from "@apollo/client";
+import client from "../../apollo-client";
+import { RESEARCH_AREA_FRAGMENT } from "./graphql/fragments";
+import { ResearchAreaType } from "./types/manual";
+import { RootQuery } from "./types/graphql";
 
 export async function getResearchAreas() {
   const { data } = await client.query<RootQuery>({

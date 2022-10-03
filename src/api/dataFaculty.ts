@@ -1,13 +1,13 @@
-import { gql } from '@apollo/client';
-import client from '../../apollo-client';
-import { RootQuery, Maybe, ResearchCenter, Faculty } from './types/graphql';
+import { gql } from "@apollo/client";
+import client from "../../apollo-client";
+import { RootQuery, Maybe, ResearchCenter, Faculty } from "./types/graphql";
 import {
   FACULTY_FRAGMENT,
   RESEARCH_AREA_FRAGMENT,
   RESEACH_CENTER_FRAGMENT,
-} from './graphql/fragments';
-import { FacultyType } from './types/faculty';
-import { EducationItem, academicRankMap } from './types/faculty';
+} from "./graphql/fragments";
+import { FacultyType } from "./types/manual";
+import { EducationItem, academicRankMap } from "./types/manual";
 
 export async function getFaculties() {
   const { data } = await client.query<RootQuery>({
@@ -54,7 +54,7 @@ export async function getFaculties() {
 }
 
 export async function getFacultyByDatabaseId(databaseId: number) {
-  const { data } = await client.query<{ faculty: RootQuery['faculty'] }>({
+  const { data } = await client.query<{ faculty: RootQuery["faculty"] }>({
     query: gql`
       ${FACULTY_FRAGMENT}
       ${RESEARCH_AREA_FRAGMENT}
@@ -91,11 +91,11 @@ export async function getFacultyByDatabaseId(databaseId: number) {
   });
 
   const dataOut = formatFacultyData(data?.faculty);
-  console.log({ data, dataOut });
+  // console.log({ data, dataOut });
   return { data: dataOut };
 }
 
-function formatFacultyData(data: Maybe<Faculty> | undefined) {
+export function formatFacultyData(data: Maybe<Faculty> | undefined) {
   if (!data) return {} as FacultyType;
   // Format research centers
   let researchCenters: unknown[] = [];
@@ -118,7 +118,7 @@ function formatFacultyData(data: Maybe<Faculty> | undefined) {
     id: data?.id,
     databaseId: data?.databaseId,
     researchCenters: researchCenters as ResearchCenter[],
-    researchAreas: data?.researchAreas?.nodes?.map((ra) => ({ ...ra })),
+    researchAreas: data?.researchAreas?.nodes?.map((ra) => ({ ...ra })) || null,
   };
 
   //  Add extra field
@@ -147,11 +147,11 @@ function formatFacultyData(data: Maybe<Faculty> | undefined) {
 }
 
 function formatJSONArray(s: Maybe<string> | undefined): string[] {
-  return JSON.parse(s || '[]');
+  return JSON.parse(s || "[]");
 }
 
 function formatJSONEducation(s: Maybe<string> | undefined): EducationItem[] {
-  return JSON.parse(s || '[]') as EducationItem[];
+  return JSON.parse(s || "[]") as EducationItem[];
 }
 
 function formatFullNameTh(
@@ -162,7 +162,7 @@ function formatFullNameTh(
 ) {
   const rank = academicRankMap.find((rank) => rank.key === academicRank);
   const title = rank?.textAbbreTh;
-  const phD = isPhd === 'Yes' ? 'ดร.' : '';
+  const phD = isPhd === "Yes" ? "ดร." : "";
   const fullName = `${title}${phD}${firstname} ${lastname}`;
   return fullName;
 }

@@ -1,5 +1,10 @@
 {
   "home": "หน้าหลัก",
   "about": "เกี่ยวกับ",
+  "about-department": "เกี่ยวกับภาควิชา",
+  "about-faculty": "คณาจารย์",
+  "about-staff": "บุคลากรฝ่ายสนับสนุน",
+  "about-admin": "ทีมบริหาร",
+  "about-retired": "อดีตคณาจารย์",
   "curriculum": "หลักสูตร"
 }

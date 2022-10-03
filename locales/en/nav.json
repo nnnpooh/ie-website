@@ -1,5 +1,10 @@
 {
   "home": "Home",
   "about": "About",
+  "about-department": "Department",
+  "about-faculty": "Faculty",
+  "about-staff": "Staff",
+  "about-admin": "Administration",
+  "about-retired": "Past Faculty",
   "curriculum": "Curriculum"
 }
