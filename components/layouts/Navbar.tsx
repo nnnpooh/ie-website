@@ -36,16 +36,11 @@ function Navbar() {
 
           <div>
             <Button.Group>
-              <Button className='bg-primary hover:bg-primary-light'>
-                Home
-              </Button>
-              <Button className='bg-primary hover:bg-primary-light'>
-                About
-              </Button>
-
+              <Button className='bg-primary hover:bg-primary-200'>Home</Button>
+              <Button className='bg-primary hover:bg-primary-200'>About</Button>
               <Menu shadow='md' width={200}>
                 <Menu.Target>
-                  <Button className='bg-primary hover:bg-primary-light'>
+                  <Button className='bg-primary hover:bg-primary-200'>
                     Curriculum
                   </Button>
                 </Menu.Target>
