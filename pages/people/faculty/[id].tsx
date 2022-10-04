@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { NextPage, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { FacultyType } from "@/src/api/types/manual";
+import { FacultyType } from "@api/types/manual";
 import { Container, Breadcrumbs } from "@mantine/core";
 import Image from "next/image";
-import { getFaculties, getFacultyByDatabaseId } from "@/src/api";
+import { getFaculties, getFacultyByDatabaseId } from "@src/api";
 
 interface IParams extends ParsedUrlQuery {
   id: string;

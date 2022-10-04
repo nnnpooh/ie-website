@@ -1,6 +1,6 @@
-import FacultyMemberCard from "@/src/components/member/FacultyMemberCard";
-import { FacultyType, ResearchAreaType } from "@/src/api/types/manual";
-import { getFaculties, getResearchAreas } from "@/src/api";
+import FacultyMemberCard from "@components/member/FacultyMemberCard";
+import { FacultyType, ResearchAreaType } from "@api/types/manual";
+import { getFaculties, getResearchAreas } from "@src/api";
 import { Container } from "@mantine/core";
 import { NextPage } from "next";
 
