@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import { NextPage, GetStaticProps } from "next";
-import { ParsedUrlQuery } from "querystring";
-import { FacultyType } from "@api/types/manual";
-import { Container, Breadcrumbs } from "@mantine/core";
-import Image from "next/image";
-import { getFaculties, getFacultyByDatabaseId } from "@src/api";
+import { useRouter } from 'next/router';
+import { NextPage, GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+import { FacultyType } from '@api/types/manual';
+import { Container, Breadcrumbs } from '@mantine/core';
+import Image from 'next/image';
+import { getFaculties, getFacultyByDatabaseId } from '@src/api';
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -20,20 +20,32 @@ const Faculty: NextPage<props> = ({ data: fac }) => {
 
   return (
     <>
-      <div className="bg-gray-800">
-        <Container>
-          <Breadcrumbs>fsdfd</Breadcrumbs>
+      <div className='bg-gray-800'>
+        <Container className='py-2'>
+          <Breadcrumbs className='text-white'>Link</Breadcrumbs>
         </Container>
       </div>
-      <div>
-        <div className="relative h-40 w-40 rounded-full overflow-hidden shadow-md">
-          <Image
-            src={fac.profileImage.sourceUrl}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="top"
-          />
-        </div>
+
+      {/* Info */}
+      <div className='bg-gray-200'>
+        <Container className='py-4'>
+          <div className='grid grid-cols-3'>
+            <div className='col-span-1'>
+              <div className='relative h-40 w-40'>
+                <Image
+                  src={fac.profileImage.sourceUrl}
+                  layout='fill'
+                  objectFit='cover'
+                  objectPosition='top'
+                />
+              </div>
+            </div>
+
+            <div className='col-span-2'>
+              <div>{fac.fullNameTh}</div>
+            </div>
+          </div>
+        </Container>
       </div>
     </>
   );
@@ -57,12 +69,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   const { data: dataFaculties } = await getFaculties();
 
-  const paths = dataFaculties.map((fac) => ({
-    params: { id: fac.databaseId?.toString() || "" },
+  const pathsTh = dataFaculties.map((fac) => ({
+    params: { id: fac.databaseId?.toString() || '' },
+    locale: 'th',
   }));
 
-  return { paths, fallback: "blocking" };
+  const pathsEn = dataFaculties.map((fac) => ({
+    params: { id: fac.databaseId?.toString() || '' },
+    locale: 'en',
+  }));
+
+  return { paths: pathsTh.concat(pathsEn), fallback: 'blocking' };
 }

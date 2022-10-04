@@ -142,7 +142,7 @@ const Navbar: FC = () => {
               size={'lg'}
               checked={router.locale === 'th' ? true : false}
               onChange={(event) => {
-                router.push(router.pathname, router.pathname, {
+                router.push(router.pathname, router.asPath, {
                   locale: event.currentTarget.checked ? 'th' : 'en',
                 });
               }}
