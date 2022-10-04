@@ -1,8 +1,8 @@
-import "../styles/globals.css";
+import "styles/globals.css";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
-import Navbar from "../components/layouts/Navbar";
-import Footer from "../components/layouts/Footer";
+import Navbar from "@components/layouts/Navbar";
+import Footer from "@components/layouts/Footer";
 import { MantineProvider } from "@mantine/core";
 
 function MyApp({ Component, pageProps }) {

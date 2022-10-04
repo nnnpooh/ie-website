@@ -13,6 +13,7 @@ export const FACULTY_FRAGMENT = gql`
     educationJson
     academicRank
     displayOrder
+    displayWebsite
     linkCv
     linkGoogleScholar
     linkPersonalHomepage

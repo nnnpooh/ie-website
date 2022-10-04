@@ -2761,6 +2761,7 @@ export type Faculty_FacultyFields = AcfFieldGroup & {
   adminPositionEnJson?: Maybe<Scalars['String']>;
   adminPositionThJson?: Maybe<Scalars['String']>;
   displayOrder?: Maybe<Scalars['Float']>;
+  displayWebsite?: Maybe<Scalars['Boolean']>;
   educationJson?: Maybe<Scalars['String']>;
   emailJson?: Maybe<Scalars['String']>;
   /** The name of the ACF Field Group */

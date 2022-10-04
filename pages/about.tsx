@@ -1,38 +1,38 @@
-import Head from 'next/head';
-import { NextSeo } from 'next-seo';
-import Navbar from '../components/layouts/Navbar';
-import Footer from '../components/layouts/Footer';
-import Image from 'next/image';
+import Head from "next/head";
+import { NextSeo } from "next-seo";
+import Navbar from "../src/components/layouts/Navbar";
+import Footer from "../src/components/layouts/Footer";
+import Image from "next/image";
 
 function AboutPage() {
   return (
     <div>
-      <div className='bg-white pb-24'>
-        <div className='relative h-80'>
+      <div className="bg-white pb-24">
+        <div className="relative h-80">
           <Image
-            src='/images/about.jpg'
-            layout='fill'
-            objectFit='cover'
-            alt='about'
+            src="/images/about.jpg"
+            layout="fill"
+            objectFit="cover"
+            alt="about"
           />
         </div>
-        <div className='mx-auto md:px-52 p-4'>
-          <div className='mt-20 text-center'>
+        <div className="mx-auto md:px-52 p-4">
+          <div className="mt-20 text-center">
             <h1>ABOUT</h1>
             <h3>Department of Industrial Engineering</h3>
           </div>
-          <div className='mt-12'>
+          <div className="mt-12">
             <h3>
               Industrial Engineering Associate Building, Building No. 06118,
               Faculty of Engineering
             </h3>
           </div>
 
-          <div className='mt-12'>
+          <div className="mt-12">
             <h3>
               The specific teaching & learning profile of your institution in IE
             </h3>
-            <p className='mt-4'>
+            <p className="mt-4">
               {`Department of Industrial Engineering, Chiang Mai University
               provides up-to-date knowledge and technology for our students in
               various fields. The department have faculty members and supported
@@ -63,11 +63,11 @@ function AboutPage() {
             </p>
           </div>
 
-          <div className='mt-12'>
+          <div className="mt-12">
             <h3>
               The specific teaching & learning profile of your institution in IE
             </h3>
-            <p className='mt-4'>
+            <p className="mt-4">
               The department of Industrial Engineering, Chiang Mai University,
               provides various fields of research. There are 8 main research
               fields that faculty members engage in; 1) Operations research 2)

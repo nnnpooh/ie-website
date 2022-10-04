@@ -1,9 +1,9 @@
-import Carousel from "../components/layouts/Carousel";
-import HomeNews from "../components/news/HomeNews";
-import HomeCurriculum from "../components/curriculum/HomeCurriculum";
-import ExternalLink from "../components/layouts/ExternalLink";
-import HomeResearch from "../components/research/HomeResearch";
-import Partner from "../components/layouts/Partner";
+import Carousel from "../src/components/layouts/Carousel";
+import HomeNews from "../src/components/news/HomeNews";
+import HomeCurriculum from "../src/components/curriculum/HomeCurriculum";
+import ExternalLink from "../src/components/layouts/ExternalLink";
+import HomeResearch from "../src/components/research/HomeResearch";
+import Partner from "../src/components/layouts/Partner";
 export default function Home() {
   return (
     <>

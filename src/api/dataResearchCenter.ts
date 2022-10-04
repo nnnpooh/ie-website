@@ -43,8 +43,16 @@ export async function getResearchCenters() {
     formatResearchCenter(el)
   );
 
-  console.log({ dataOut });
-  return { data: dataOut };
+  // Filter out faculty that should not be on the website.
+  const dataOutFilt = dataOut.map((res) => {
+    const facs = res.faculties.slice(0);
+    const facsFilt = facs.filter((fac) => fac.displayWebsite);
+    res.faculties = facsFilt;
+    return res;
+  });
+
+  // console.log({ dataOut });
+  return { data: dataOutFilt };
 }
 
 export async function getResearchCenterByDatabaseId(databaseId: number) {

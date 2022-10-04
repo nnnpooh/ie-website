@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { NextSeo } from "next-seo";
-import Navbar from "../../../components/layouts/Navbar";
-import Footer from "../../../components/layouts/Footer";
-import SupportingStaffCard from "../../../components/member/SupportingStaffCard";
+import Navbar from "../../../src/components/layouts/Navbar";
+import Footer from "../../../src/components/layouts/Footer";
+import SupportingStaffCard from "../../../src/components/member/SupportingStaffCard";
 
 function SupportStaffPage() {
   return (

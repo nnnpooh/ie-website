@@ -50,7 +50,10 @@ export async function getFaculties() {
 
   const dataOut = data.faculties?.nodes?.map((el) => formatFacultyData(el));
 
-  return { data: dataOut || ([] as FacultyType[]) };
+  // Filter out excluded items
+  const dataOutFilt = dataOut.filter((fac) => fac.displayWebsite);
+
+  return { data: dataOutFilt || ([] as FacultyType[]) };
 }
 
 export async function getFacultyByDatabaseId(databaseId: number) {
