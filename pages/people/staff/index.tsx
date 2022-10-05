@@ -1,7 +1,7 @@
 import { StaffType } from "@src/api/types/manual";
 import { getStaffs } from "@src/api/dataStaff";
 import { NextPage } from "next";
-import StaffCard from "@components/member/StaffCard";
+import StaffCard from "@components/people/StaffCard";
 import { Container } from "@mantine/core";
 
 interface props {

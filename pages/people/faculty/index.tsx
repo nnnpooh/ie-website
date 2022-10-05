@@ -1,4 +1,4 @@
-import FacultyCard from "@components/member/FacultyCard";
+import FacultyCard from "@components/people/FacultyCard";
 import { FacultyType, ResearchAreaType } from "@api/types/manual";
 import { getFaculties, getResearchAreas } from "@src/api";
 import { Container } from "@mantine/core";
