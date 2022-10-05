@@ -60,8 +60,8 @@ export async function getResearchCenterByDatabaseId(databaseId: number) {
     query: gql`
       ${FACULTY_FRAGMENT}
       ${RESEACH_CENTER_FRAGMENT}
-      query ResearchCenterSingle {
-        researchCenter(id: "", idType: DATABASE_ID) {
+      query ResearchCenterSingle($id: ID = ${databaseId}, $idType: ResearchCenterIdType = DATABASE_ID) {
+        researchCenter(idType: $idType, id: $id) {
           id
           databaseId
           content
@@ -87,7 +87,9 @@ export async function getResearchCenterByDatabaseId(databaseId: number) {
     `,
   });
 
+  console.log({ data });
   const dataOut = formatResearchCenter(data?.researchCenter);
+
   return { data: dataOut };
 }
 

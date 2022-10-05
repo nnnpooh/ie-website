@@ -6170,12 +6170,15 @@ export type ResearchCenterToTermNodeConnectionWhereArgs = {
 /** Field Group */
 export type ResearchCenter_ResearchCenterFields = AcfFieldGroup & {
   __typename?: 'ResearchCenter_ResearchCenterFields';
+  abbreviationEn?: Maybe<Scalars['String']>;
+  coverImage?: Maybe<MediaItem>;
   desEn?: Maybe<Scalars['String']>;
   desTh?: Maybe<Scalars['String']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']>;
   fullNameEn?: Maybe<Scalars['String']>;
   fullNameTh?: Maybe<Scalars['String']>;
+  logoImage?: Maybe<MediaItem>;
 };
 
 /** Input for the resetUserPassword mutation */
@@ -8642,6 +8645,7 @@ export type StaffToPreviewConnectionEdge = {
 export type Staff_StaffFields = AcfFieldGroup & {
   __typename?: 'Staff_StaffFields';
   displayOrder?: Maybe<Scalars['Float']>;
+  displayWebsite?: Maybe<Scalars['Boolean']>;
   emailJson?: Maybe<Scalars['String']>;
   /** The name of the ACF Field Group */
   fieldGroupName?: Maybe<Scalars['String']>;

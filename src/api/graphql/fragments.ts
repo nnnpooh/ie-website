@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const FACULTY_FRAGMENT = gql`
   fragment Faculty_FacultyFieldsFragment on Faculty_FacultyFields {
@@ -46,5 +46,16 @@ export const RESEACH_CENTER_FRAGMENT = gql`
     fieldGroupName
     fullNameEn
     fullNameTh
+    abbreviationEn
+    coverImage {
+      sourceUrl
+      sizes
+      altText
+    }
+    logoImage {
+      sourceUrl
+      sizes
+      altText
+    }
   }
 `;

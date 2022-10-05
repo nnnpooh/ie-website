@@ -10,11 +10,8 @@ export default function Home() {
       <Carousel />
       <HomeNews />
       <HomeCurriculum />
-
       <ExternalLink />
-
       <HomeResearch />
-
       <Partner />
     </>
   );
