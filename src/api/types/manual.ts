@@ -3,6 +3,7 @@ import {
   Faculty_FacultyFields,
   ResearchCenter_ResearchCenterFields,
   ResearchArea,
+  Staff_StaffFields,
 } from "./graphql";
 
 export interface EducationItem {
@@ -95,4 +96,13 @@ export interface FacultyType extends Faculty_FacultyFields {
   fullNameEn: string;
   researchCenters: ResearchCenterType[];
   researchAreas: ResearchArea[] | null;
+}
+
+export interface StaffType extends Staff_StaffFields {
+  id: Maybe<string>;
+  databaseId: Maybe<number>;
+  email: string[];
+  phone: string[];
+  positionTh: string[];
+  positionEn: string[];
 }

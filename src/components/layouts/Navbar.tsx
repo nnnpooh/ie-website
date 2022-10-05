@@ -34,9 +34,14 @@ const Navbar: FC = () => {
   const handleMemberClick = () => {
     setMemberActive(!memberActive);
   };
-  const bg = "bg-gradient-to-r from-primary to-primary-600";
+  const bg = "bg-gradient-to-r from-primary-700 to-primary-600";
   const bgActive = "bg-gradient-to-r from-primary-300 to-primary-200";
-  const bgHover = "hover:from-primary hover:from-primary-900";
+  const bgHover = "hover:from-primary-800 hover:to-primary-800";
+
+  // const bg = "bg-gray-100 text-gray-600";
+  // const bgActive = "bg-gray-100 text-primary text-underline";
+  // const bgHover = "hover:bg-gray-200";
+
   return (
     <nav className="bg-white">
       <Container size="xl">
@@ -66,7 +71,9 @@ const Navbar: FC = () => {
               {/* Home */}
               <Button.Group>
                 <Button
-                  className={`${path === "/" ? bgActive : bg} ${bgHover}`}
+                  className={`${
+                    path === "/" ? bgActive : bg
+                  } ${bgHover} text-lg`}
                   onClick={() => {
                     router.push("/");
                   }}
@@ -79,7 +86,7 @@ const Navbar: FC = () => {
                     <Button
                       className={`${
                         path === "/about" ? bgActive : bg
-                      } ${bgHover}`}
+                      } ${bgHover} text-lg`}
                     >
                       {t("about")}
                     </Button>
@@ -119,7 +126,7 @@ const Navbar: FC = () => {
                     <Button
                       className={`${
                         path === "/curriculum" ? bgActive : bg
-                      } ${bgHover}`}
+                      } ${bgHover} text-lg`}
                     >
                       <div className="flex items-center gap-1">
                         <div>{t("curriculum")}</div>

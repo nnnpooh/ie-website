@@ -1,58 +1,33 @@
-import Head from "next/head";
-import { NextSeo } from "next-seo";
-import Navbar from "../../../src/components/layouts/Navbar";
-import Footer from "../../../src/components/layouts/Footer";
-import SupportingStaffCard from "../../../src/components/member/SupportingStaffCard";
+import { StaffType } from "@src/api/types/manual";
+import { getStaffs } from "@src/api/dataStaff";
+import { NextPage } from "next";
+import StaffCard from "@components/member/StaffCard";
+import { Container } from "@mantine/core";
 
-function SupportStaffPage() {
-  return (
-    <div>
-      <div className="contact_container">
-        <div className="contact_title_container">
-          <h3>Supporting Staff</h3>
-        </div>
-
-        <div className="mt-4 flex flex-wrap">
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-          <div className="md:w-1/3 p-4">
-            <SupportingStaffCard />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+interface props {
+  dataStaffs: StaffType[];
 }
 
-export default SupportStaffPage;
+const StaffPage: NextPage<props> = ({ dataStaffs: staffs }) => {
+  // console.log({ staffs });
+  return (
+    <div>
+      <Container size={"lg"}>
+        {staffs?.map((staff) => (
+          <StaffCard staff={staff} key={staff.id} />
+        ))}
+      </Container>
+    </div>
+  );
+};
+
+export default StaffPage;
+
+export async function getStaticProps() {
+  const { data: dataStaffs } = await getStaffs();
+  return {
+    props: {
+      dataStaffs,
+    },
+  };
+}

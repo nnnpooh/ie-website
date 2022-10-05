@@ -59,3 +59,26 @@ export const RESEACH_CENTER_FRAGMENT = gql`
     }
   }
 `;
+
+export const STAFF_FRAGMENT = gql`
+  fragment Staff_StaffFieldsFragment on Staff_StaffFields {
+    displayOrder
+    displayWebsite
+    emailJson
+    fieldGroupName
+    firstnameEn
+    firstnameTh
+    lastnameEn
+    lastnameTh
+    phoneJson
+    positionEnJson
+    positionThJson
+    titleEn
+    titleTh
+    profileImage {
+      sourceUrl
+      sizes
+      altText
+    }
+  }
+`;

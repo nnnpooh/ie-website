@@ -1,4 +1,4 @@
-import FacultyMemberCard from "@components/member/FacultyMemberCard";
+import FacultyCard from "@components/member/FacultyCard";
 import { FacultyType, ResearchAreaType } from "@api/types/manual";
 import { getFaculties, getResearchAreas } from "@src/api";
 import { Container } from "@mantine/core";
@@ -23,7 +23,7 @@ const FacultyMemberPage: NextPage<props> = ({
         </div>
         <div className="grid grid-cols-3 gap-2 mt-4">
           {facs?.map((fac) => (
-            <FacultyMemberCard fac={fac} key={fac.id} />
+            <FacultyCard fac={fac} key={fac.id} />
           ))}
         </div>
       </Container>
