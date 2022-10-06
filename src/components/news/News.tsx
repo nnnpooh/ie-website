@@ -1,61 +1,107 @@
-import { NextPage } from 'next';
-import { FBFeedType } from '@src/api';
-import Image from 'next/image';
-import ScrollContainer from 'react-indiana-drag-scroll';
-import { Container, Card, ScrollArea } from '@mantine/core';
+import { NextPage } from "next";
+import { FBFeedType, FacebookPageType } from "@src/api";
+import Image from "next/image";
+import ScrollContainer from "react-indiana-drag-scroll";
+import { IconBrandMeta } from "@tabler/icons";
+import { useRouter } from "next/router";
+import { Container, Card, Center, Badge } from "@mantine/core";
 
 interface Props {
-  ug: FBFeedType;
-  im: FBFeedType;
-  grad: FBFeedType;
+  data: FBFeedType[];
 }
 
-const NewsPage: NextPage<Props> = ({ ug, im, grad }) => {
-  console.log({ ug, im, grad });
+const NewsPage: NextPage<Props> = ({ data }) => {
+  console.log({ data });
+  const router = useRouter();
 
-  const ts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   return (
-    <div className='bg-gray-200'>
-      <ScrollContainer>
-        <div className='flex gap-2'>
-          {ts.map((el) => (
-            <div
-              className='flex h-80 w-80 bg-red-300 items-center justify-center flex-none'
-              style={{ width: 500 }}
-              key={el}
+    <div className="bg-gray-100">
+      {/* <Container size="xl" className="pt-4">
+        <div className="text-center text-4xl  text-primary">News</div>
+      </Container> */}
+      {/* Use padding on the scroll container so that there is no cut off when the card expands. */}
+      <ScrollContainer className="p-4">
+        <div className="flex gap-4 items-start">
+          {data.map((el) => (
+            <Card
+              key={el.id}
+              className="w-60 flex-none hover:scale-105 transition-transform ease-in-out cursor-pointer"
+              shadow="lg"
+              radius="md"
+              withBorder
+              onClick={() => {
+                openInNewTab(el.permalink_url);
+              }}
             >
-              {el}
-            </div>
-          ))}
-        </div>
-      </ScrollContainer>
-
-      {/* <Container size={'xl'}>
-        <div className='flex gap-2'>
-          {ug.data.map((fb) => (
-            <Card key={fb.id}>
               <Card.Section>
-                {fb?.full_picture && (
-                  <div className='relative h-80 w-80'>
+                {el.full_picture ? (
+                  <div className="relative h-60 w-full">
                     <Image
-                      src={fb.full_picture}
-                      layout='fill'
-                      objectFit='cover'
+                      src={el.full_picture}
+                      layout="fill"
+                      objectFit="cover"
                     />
+                  </div>
+                ) : (
+                  <div className="h-60 bg-gradient-to-tr from-primary-200 to-primary-700 flex items-center justify-center">
+                    {el.message_chars ? (
+                      <div className="text-white text-6xl">{`${el.message_chars[0]}.`}</div>
+                    ) : (
+                      <IconBrandMeta className="text-white" size={80} />
+                    )}
                   </div>
                 )}
               </Card.Section>
-              <div>
-                {fb?.attachments?.data
-                  ? fb.attachments.data[0].description
-                  : ''}
+
+              <div className="flex flex-col gap-2 mt-2">
+                <div className="flex justify-start">
+                  <div className="flex items-center justify-between w-full">
+                    <Badge
+                      variant="gradient"
+                      gradient={{ from: "cmu.7", to: "cmu.3" }}
+                    >
+                      {getFBPageName(el.facebook_page)}
+                    </Badge>
+
+                    <div className="text-sm text-gray-400">
+                      {new Date(el.created_time_ms).toLocaleDateString()}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-sm">{trim(el.message, 60)}</div>
               </div>
             </Card>
           ))}
         </div>
-      </Container> */}
+      </ScrollContainer>
     </div>
   );
 };
 
 export default NewsPage;
+
+function trim(text: string, num: number) {
+  if (text.length > num) {
+    // I cannot use text.slice() because it will mess up the emoji.  Use this technique from https://stackoverflow.com/a/61210496
+    const arrText = Array.from(text);
+    return `${arrText.slice(0, num).join("")}...`;
+  } else {
+    return text;
+  }
+}
+
+function getFBPageName(page: FacebookPageType) {
+  switch (page) {
+    case "undergradTH":
+      return "Bachlor";
+    case "masterIM":
+      return "Master IM";
+    case "grad":
+      return "Graduate";
+  }
+}
+
+const openInNewTab = (url: string) => {
+  const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  if (newWindow) newWindow.opener = null;
+};

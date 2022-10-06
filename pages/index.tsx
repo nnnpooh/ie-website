@@ -8,16 +8,14 @@ import Partner from "../src/components/layouts/Partner";
 import { NextPage } from "next";
 
 interface Props {
-  dataUndergradTh: FBFeedType;
-  dataMasterIM: FBFeedType;
-  dataGrad: FBFeedType;
+  dataFacebookFeed: FBFeedType[];
 }
 
-const Home: NextPage<Props> = ({ dataUndergradTh, dataMasterIM, dataGrad }) => {
+const Home: NextPage<Props> = ({ dataFacebookFeed }) => {
   return (
     <>
       <Carousel />
-      <News ug={dataUndergradTh} im={dataMasterIM} grad={dataGrad} />
+      <News data={dataFacebookFeed} />
       <HomeCurriculum />
       <ExternalLink />
       <HomeResearch />
@@ -29,12 +27,10 @@ const Home: NextPage<Props> = ({ dataUndergradTh, dataMasterIM, dataGrad }) => {
 export default Home;
 
 export async function getStaticProps() {
-  const { dataUndergradTh, dataMasterIM, dataGrad } = await getFacebookFeeds();
+  const { dataFacebookFeed } = await getFacebookFeeds();
   return {
     props: {
-      dataUndergradTh,
-      dataMasterIM,
-      dataGrad,
+      dataFacebookFeed,
     },
   };
 }
