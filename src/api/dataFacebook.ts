@@ -65,11 +65,15 @@ function formatFBData(
   const dataOut: FBFeedType[] = dataIn.data.map((el) => {
     const message = el?.message ? formatText(el.message) : "";
     const message_chars = getOnlyCharacters(message);
+
+    const full_picture = el.full_picture
+      ? replaceImageURL(el.full_picture)
+      : "";
     return {
       message,
       message_chars,
       permalink_url: el.permalink_url,
-      full_picture: el.full_picture || null,
+      full_picture,
       created_time_ms: new Date(el.created_time).getTime(),
       created_time: el.created_time,
       id: el.id,
@@ -90,3 +94,9 @@ const getOnlyCharacters = (text: string) => {
   const reNotChar = /[^\u0E01-\u0E2Eู^a-z^A-Z]/g;
   return text.replace(reNotChar, "");
 };
+
+function replaceImageURL(url: string) {
+  const urlReplace = "https://scontent.fbkk10-1";
+  const reDomain = /^https?:\/\/scontent\.[^.]+/;
+  return url.replace(reDomain, urlReplace);
+}
