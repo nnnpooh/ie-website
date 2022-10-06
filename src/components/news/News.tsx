@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { FBFeedType, FacebookPageType } from "@src/api";
 import Image from "next/image";
 import ScrollContainer from "react-indiana-drag-scroll";
-import { IconPhoto } from "@tabler/icons";
+import { IconPhoto, IconBrandMeta } from "@tabler/icons";
 import { useRouter } from "next/router";
 import { Container, Card, Center, Badge, Tabs } from "@mantine/core";
 
