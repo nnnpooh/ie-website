@@ -30,3 +30,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+.env
+output_longlivedAT.json
+output_pageAT_raw.json
+output_pageAT.json
