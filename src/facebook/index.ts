@@ -74,7 +74,8 @@ async function run() {
     appSecret,
     shortLiveUserAccessToken
   );
-  getAccessToken(userAccountId, longLiveAccessToken);
+
+  longLiveAccessToken && getAccessToken(userAccountId, longLiveAccessToken);
 }
 
 run();
