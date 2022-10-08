@@ -5,15 +5,18 @@ export async function getFacebookFeeds() {
   const pageIdUndergradTh = process.env.PAGE_ID_UNDERGRAD_TH;
   const pageIdMasterIM = process.env.PAGE_ID_MASTER_IM;
   const pageIdGrad = process.env.PAGE_ID_GRAD;
-  const accessTokenIM = process.env.PAGE_ACCESS_TOKEN_IM;
+  const pageIdIE = process.env.PAGE_ID_IECMU;
+  const accessTokenIM = process.env.PAGE_ACCESS_TOKEN_MASTER_IM;
   const accessTokenUGTH = process.env.PAGE_ACCESS_TOKEN_UG_TH;
   const accessTokenGrad = process.env.PAGE_ACCESS_TOKEN_GRAD;
+  const accessTokenIE = process.env.PAGE_ACCESS_TOKEN_IECMU;
 
   const urlUndergradTh = `https://graph.facebook.com/v14.0/${pageIdUndergradTh}/feed`;
   const urlMasterIM = `https://graph.facebook.com/v14.0/${pageIdMasterIM}/feed`;
   const urlGrad = `https://graph.facebook.com/v14.0/${pageIdGrad}/feed`;
+  const urlIE = `https://graph.facebook.com/v14.0/${pageIdIE}/feed`;
 
-  const postLimit = 10;
+  const postLimit = 5;
 
   const resUndergradTh = await axios.get<FBFeedAPIType>(urlUndergradTh, {
     params: {
@@ -39,17 +42,27 @@ export async function getFacebookFeeds() {
     },
   });
 
+  const resIE = await axios.get<FBFeedAPIType>(urlIE, {
+    params: {
+      access_token: accessTokenIE,
+      fields: "id,created_time,message,permalink_url,full_picture,attachments",
+      limit: postLimit,
+    },
+  });
+
   const dataUndergradThFormatted = formatFBData(
     resUndergradTh.data,
     "undergradTH"
   );
   const dataMasterIMFormatted = formatFBData(resMasterIM.data, "masterIM");
   const dataGradFormatted = formatFBData(resGrad.data, "grad");
+  const dataIEFormatted = formatFBData(resIE.data, "ie");
 
   const dataAll: FBFeedType[] = []
     .concat(dataUndergradThFormatted)
     .concat(dataMasterIMFormatted)
     .concat(dataGradFormatted)
+    .concat(dataIEFormatted)
     .filter((el) => (!el.message && !el.full_picture ? false : true)) // Filter private feed
     .sort((a, b) => b.created_time_ms - a.created_time_ms); // Sort time
 

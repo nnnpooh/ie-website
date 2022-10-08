@@ -11,7 +11,7 @@ export interface FBFeedType {
   facebook_page: FacebookPageType;
 }
 
-export type FacebookPageType = "undergradTH" | "masterIM" | "grad";
+export type FacebookPageType = "undergradTH" | "masterIM" | "grad" | "ie";
 
 export interface FBFeedAPIType {
   data: FBFeedDatum[];

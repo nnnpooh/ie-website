@@ -127,6 +127,8 @@ function getFBPageName(page: FacebookPageType) {
       return "Master IM";
     case "grad":
       return "Graduate";
+    case "ie":
+      return "IE-CMU";
   }
 }
 

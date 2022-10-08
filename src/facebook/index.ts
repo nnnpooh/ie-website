@@ -2,6 +2,7 @@ require("dotenv").config();
 import axios, { AxiosRequestConfig, AxiosPromise } from "axios";
 import { FBLongLive, FBAccessToken } from "./types/main";
 import * as fs from "fs";
+import { parse, stringify } from "envfile";
 
 async function getLongLivedAccessToken(
   appId: string,
@@ -28,6 +29,7 @@ async function getLongLivedAccessToken(
     return output.data.access_token;
   } catch (err) {
     console.log(err.response);
+    return "";
   }
 }
 
@@ -58,6 +60,7 @@ async function getAccessToken(accountId: string, longLivedAccessToken: string) {
       JSON.stringify(outputFormatted, null, 2),
       "utf-8"
     );
+    return outputFormatted;
   } catch (err) {
     console.log(err.response);
   }
@@ -69,13 +72,46 @@ async function run() {
   const shortLiveUserAccessToken = process.env.FB_SHORT_LIVED_USER_ACCESS_TOKEN;
   const userAccountId = process.env.FB_USER_ACCOUNT_ID;
 
+  const pageIdUndergradTh = process.env.PAGE_ID_UNDERGRAD_TH;
+  const pageIdMasterIM = process.env.PAGE_ID_MASTER_IM;
+  const pageIdGrad = process.env.PAGE_ID_GRAD;
+  const pageIdIE = process.env.PAGE_ID_IECMU;
+
   const longLiveAccessToken = await getLongLivedAccessToken(
     appId,
     appSecret,
     shortLiveUserAccessToken
   );
 
-  longLiveAccessToken && getAccessToken(userAccountId, longLiveAccessToken);
+  if (longLiveAccessToken) {
+    // write to .env file
+    const envString = stringify({
+      FB_APP_ID: appId,
+      FB_APP_SECRET: appSecret,
+      FB_SHORT_LIVED_USER_ACCESS_TOKEN: longLiveAccessToken,
+      FB_USER_ACCOUNT_ID: userAccountId,
+    });
+
+    const ats = await getAccessToken(userAccountId, longLiveAccessToken);
+
+    const envLocalString = stringify({
+      PAGE_ID_UNDERGRAD_TH: pageIdUndergradTh,
+      PAGE_ACCESS_TOKEN_UG_TH: ats.find((el) => el.id === pageIdUndergradTh)
+        .access_token,
+      PAGE_ID_MASTER_IM: pageIdMasterIM,
+      PAGE_ACCESS_TOKEN_MASTER_IM: ats.find((el) => el.id === pageIdMasterIM)
+        .access_token,
+      PAGE_ID_GRAD: pageIdGrad,
+      PAGE_ACCESS_TOKEN_GRAD: ats.find((el) => el.id === pageIdGrad)
+        .access_token,
+      PAGE_ID_IECMU: pageIdIE,
+      PAGE_ACCESS_TOKEN_IECMU: ats.find((el) => el.id === pageIdIE)
+        .access_token,
+    });
+
+    console.log(envString);
+    console.log(envLocalString);
+  }
 }
 
 run();
