@@ -62,12 +62,12 @@ export async function getFacebookFeeds() {
     .concat(dataUndergradThFormatted)
     .concat(dataMasterIMFormatted)
     .concat(dataGradFormatted)
-    .concat(dataIEFormatted)
-    .filter((el) => (!el.message && !el.full_picture ? false : true)) // Filter private feed
-    .sort((a, b) => b.created_time_ms - a.created_time_ms); // Sort time
+    .concat(dataIEFormatted);
+
+  const dataAllProcessed = sortFilterPost(dataAll);
 
   return {
-    dataFacebookFeed: dataAll,
+    dataFacebookFeed: dataAllProcessed,
   };
 }
 
@@ -112,8 +112,37 @@ const getOnlyCharacters = (text: string) => {
   return text.replace(reNotChar, "");
 };
 
-function replaceImageURL(url: string) {
-  const urlReplace = "https://scontent.fbkk10-1";
-  const reDomain = /^https?:\/\/scontent\.[^.]+/;
-  return url.replace(reDomain, urlReplace);
+function sortFilterPost(dataIn: FBFeedType[]) {
+  // Filter private feed
+  const dataInFilt = dataIn.filter((el) =>
+    !el.message && !el.full_picture ? false : true
+  );
+
+  // Sort so that earlier post comes first.
+  const dataInSorted = dataInFilt.sort(
+    (a, b) => a.created_time_ms - b.created_time_ms
+  );
+
+  // Get array of photos
+  const picturesIdx = dataInSorted.map((el) => el.full_picture);
+
+  // Remove duplicates
+  const dataInSortFilt = dataInSorted.filter((curr, idx) => {
+    if (curr.full_picture) {
+      return picturesIdx.indexOf(curr.full_picture) === idx;
+    } else {
+      // Do not filter if there is no picture.
+      return true;
+    }
+  });
+
+  // Sort data sot that later post comes first.
+  return dataInSortFilt.sort((a, b) => b.created_time_ms - a.created_time_ms);
 }
+
+// This one no longer a valid strategy.
+// function replaceImageURL(url: string) {
+//   const urlReplace = "https://scontent.fbkk10-1";
+//   const reDomain = /^https?:\/\/scontent\.[^.]+/;
+//   return url.replace(reDomain, urlReplace);
+// }

@@ -60,7 +60,7 @@ const FacultyCard: FC<Props> = ({ fac }) => {
           </div>
           <div className="flex gap-2 flex-wrap justify-center">
             {fac.adminPositionTh.map((el) => (
-              <Badge>{el}</Badge>
+              <Badge key={el}>{el}</Badge>
             ))}
           </div>
         </div>

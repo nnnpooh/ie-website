@@ -11,7 +11,6 @@ interface Props {
 }
 
 const NewsPage: NextPage<Props> = ({ data }) => {
-  console.log({ data });
   const router = useRouter();
 
   const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -53,9 +52,10 @@ const NewsPage: NextPage<Props> = ({ data }) => {
                     {el.full_picture ? (
                       <div className="relative h-60 w-full">
                         <Image
-                          src={el.full_picture}
+                          src={`/api/imageProxy?imageUrl=${el.full_picture}`}
                           layout="fill"
                           objectFit="cover"
+                          alt={el.message}
                         />
                       </div>
                     ) : (
@@ -98,7 +98,7 @@ const NewsPage: NextPage<Props> = ({ data }) => {
             style={{ gridAutoColumns: "21%" }}
           >
             {nums.map((num) => (
-              <div>{num}</div>
+              <div key={num}>{num}</div>
             ))}
           </div>
         </Tabs.Panel>

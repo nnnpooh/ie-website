@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import styles from '/styles/Layout.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Button, Menu, Container } from '@mantine/core';
-import { IconSettings } from '@tabler/icons';
+import { useState } from "react";
+import styles from "/styles/Layout.module.css";
+import Link from "next/link";
+import Image from "next/image";
+import { Button, Menu, Container } from "@mantine/core";
+import { IconSettings } from "@tabler/icons";
 
 function Navbar() {
   const [active, setActive] = useState(false);
@@ -22,10 +22,10 @@ function Navbar() {
   };
 
   return (
-    <nav className='bg-white h-24 flex items-center justify-center'>
+    <nav className="bg-white h-24 flex items-center justify-center">
       <Container>
-        <div className='flex justify-between'>
-          <div className='h-20 bg-red-300  ' style={{ width: '200px' }}>
+        <div className="flex justify-between">
+          <div className="h-20 bg-red-300  " style={{ width: "200px" }}>
             {/* <Image
               src='/industrial_engineering_logo.png'
               alt='ไออี มช'
@@ -36,16 +36,16 @@ function Navbar() {
 
           <div>
             <Button.Group>
-              <Button className='bg-primary hover:bg-primary-light'>
+              <Button className="bg-primary hover:bg-primary-light">
                 Home
               </Button>
-              <Button className='bg-primary hover:bg-primary-light'>
+              <Button className="bg-primary hover:bg-primary-light">
                 About
               </Button>
 
-              <Menu shadow='md' width={200}>
+              <Menu shadow="md" width={200}>
                 <Menu.Target>
-                  <Button className='bg-primary hover:bg-primary-light'>
+                  <Button className="bg-primary hover:bg-primary-light">
                     Curriculum
                   </Button>
                 </Menu.Target>
@@ -60,40 +60,40 @@ function Navbar() {
             </Button.Group>
           </div>
 
-          <div className='hidden lg:flex items-center space-x-1'>
-            <Link href='/'>
+          <div className="hidden lg:flex items-center space-x-1">
+            <Link href="/">
               <a className={styles.menuItem}>Home</a>
             </Link>
-            <Link href='/about'>
+            <Link href="/about">
               <a className={styles.menuItem}>About</a>
             </Link>
-            <Link href='#'>
+            <Link href="#">
               <a
-                href='#'
+                href="#"
                 onClick={handlecurriculumClick}
                 className={styles.menuItem}
               >
                 Curriculum
               </a>
             </Link>
-            <Link href='#'>
+            <Link href="#">
               <a onClick={handleMemberClick} className={styles.menuItem}>
                 Members
               </a>
             </Link>
-            <Link href='/comming_soon'>
+            <Link href="/comming_soon">
               <a className={styles.menuItem}>Research</a>
             </Link>
-            <Link href='/contact'>
+            <Link href="/contact">
               <a className={styles.menuItem}>Resources</a>
             </Link>
-            <Link href='/contact'>
+            <Link href="/contact">
               <a className={styles.menuItem}>Contact</a>
             </Link>
-            <Link href='/'>
+            <Link href="/">
               <a className={styles.menuItem}>EN</a>
             </Link>
-            <Link href='/'>
+            <Link href="/">
               <a className={styles.menuItem}>Search</a>
             </Link>
           </div>
@@ -101,22 +101,22 @@ function Navbar() {
           {/* Curriculum  */}
           <div
             className={`${
-              curriculumActive ? '' : 'hidden'
+              curriculumActive ? "" : "hidden"
             } mobile-menu right-0 top-24 bg-white absolute border-pink-900 border-b-2 border-l-2 w-1/2 z-50`}
           >
-            <ul className=''>
-              <li className='active'>
-                <Link href='/'>
+            <ul className="">
+              <li className="active">
+                <Link href="/">
                   <a className={`block text-sm px-2 py-4`}>Bachelor</a>
                 </Link>
               </li>
-              <li className=''>
-                <Link href='/'>
+              <li className="">
+                <Link href="/">
                   <a className={`block text-sm px-2 py-4`}>Master</a>
                 </Link>
               </li>
-              <li className=''>
-                <Link href='/'>
+              <li className="">
+                <Link href="/">
                   <a className={`block text-sm px-2 py-4`}>Doctoral</a>
                 </Link>
               </li>
@@ -126,39 +126,38 @@ function Navbar() {
           {/* member  */}
           <div
             className={`${
-              memberActive ? '' : 'hidden'
+              memberActive ? "" : "hidden"
             } mobile-menu right-0 top-24 bg-white absolute border-pink-900 border-b-2 border-l-2 w-1/2 z-50`}
           >
-            <ul className=''>
-              <li className=''>
-                <Link href='/member/faculty'>
+            <ul className="">
+              <li className="">
+                <Link href="/member/faculty">
                   <a className={`block text-sm px-2 py-4`}>Faculty Members</a>
                 </Link>
               </li>
-              <li className=''>
-                <Link href='/member/staff'>
+              <li className="">
+                <Link href="/member/staff">
                   <a className={`block text-sm px-2 py-4`}>Supporting Staff</a>
                 </Link>
               </li>
             </ul>
           </div>
           {/* <!-- Mobile menu button --> */}
-          <div className='md:hidden flex items-center'>
+          <div className="md:hidden flex items-center">
             <button
-              className='outline-none mobile-menu-button ml-3 mr-4'
+              className="outline-none mobile-menu-button ml-3 mr-4"
               onClick={handleMobileMenuClick}
             >
               <svg
-                className=' w-10 h-10 hover:text-green-500 '
-                x-show='!showMenu'
-                fill='none'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
+                className=" w-10 h-10 hover:text-green-500 "
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <path d='M4 6h16M4 12h16M4 18h16'></path>
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
             </button>
           </div>
@@ -169,22 +168,22 @@ function Navbar() {
 
       <div
         className={`${
-          active ? '' : 'hidden'
+          active ? "" : "hidden"
         } mobile-menu right-0 bg-white absolute border-pink-900 border-b-2 border-l-2 w-full z-50`}
       >
-        <ul className=''>
-          <li className='active'>
-            <Link href='/'>
+        <ul className="">
+          <li className="active">
+            <Link href="/">
               <a className={`block text-sm px-2 py-4`}>Home</a>
             </Link>
           </li>
           <li>
-            <Link href='/about'>
+            <Link href="/about">
               <a className={`block text-sm px-2 py-4 `}>About</a>
             </Link>
           </li>
           <li>
-            <Link href='#'>
+            <Link href="#">
               <a
                 onClick={handlecurriculumClick}
                 className={`block text-sm px-2 py-4 `}
@@ -194,7 +193,7 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href='#'>
+            <Link href="#">
               <a
                 onClick={handleMemberClick}
                 className={`block text-sm px-2 py-4 `}
@@ -204,25 +203,25 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href='/comming_soon'>
+            <Link href="/comming_soon">
               <a className={`block text-sm px-2 py-4  `}>Research</a>
             </Link>
           </li>
           <li>
-            <Link href='/contact'>
+            <Link href="/contact">
               <a className={`block text-sm px-2 py-4  `}>Resources</a>
             </Link>
           </li>
           <li>
-            <Link href='/contact'>
+            <Link href="/contact">
               <a className={`block text-sm px-2 py-4  `}>Contact</a>
             </Link>
           </li>
           <li>
-            <hr className='bg-black'></hr>
+            <hr className="bg-black"></hr>
           </li>
           <li>
-            <Link href='/contact'>
+            <Link href="/contact">
               <a className={`block text-sm px-2 py-4  `}>EN</a>
             </Link>
           </li>
