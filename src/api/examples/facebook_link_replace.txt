@@ -1,6 +1,8 @@
-// const link =
-//   "https://scontent.fbkk22-3.fna.fbcdn.net/v/t39.30808-6/309556571_470547578450510_6114846745939902913_n.jpg?stp=dst-jpg_s720x720&_nc_cat=103&ccb=1-7&_nc_sid=8024bb&_nc_ohc=inzZAC8RyNIAX_zMqFi&_nc_ht=scontent.fbkk22-3.fna&edm=AKK4YLsEAAAA&oh=00_AT-LufAyUfzxHGIymQ3veiutVR9SYqA8beoAueAbXNBKwQ&oe=634413D9";
-// const reDomain = /^https?:\/\/scontent\.[^.]+/;
-// const linkReplace = "https://scontent.fbkk10-1";
+// const link = "https://scontent.fbkk22-3.fna.fbcdn.net/v/t39.30808-6/309556571_470547578450510_6114846745939902913_n.jpg?stp=dst-jpg_s720x720&_nc_cat=103&ccb=1-7&_nc_sid=8024bb&_nc_ohc=inzZAC8RyNIAX_zMqFi&_nc_ht=scontent.fbkk22-3.fna&edm=AKK4YLsEAAAA&oh=00_AT-LufAyUfzxHGIymQ3veiutVR9SYqA8beoAueAbXNBKwQ&oe=634413D9";
+// const link = "https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/310004229_551783063414888_748875301324722147_n.jpg?stp=dst-jpg_s720x720&_nc_cat=104&ccb=1-7&_nc_sid=110474&_nc_ohc=doY4yT_E1CkAX8Nle3L&_nc_ht=scontent-hkt1-2.xx&edm=AKK4YLsEAAAA&oh=00_AT-t6jLD7A9bgaTfSufV4gQPlLfxWw3ZYVb7Hazitl3iDQ&oe=63468B74"
+
+// const reDomain = /\w+:\/+[\w|\.|\-]+/
+// console.log(reDomain.exec(link))
+// const linkReplace = "https://scontent.fbkk10-1.fna.fbcdn.net";
 // const urlOut = link.replace(reDomain, linkReplace);
 // console.log(urlOut);

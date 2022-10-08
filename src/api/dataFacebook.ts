@@ -79,9 +79,13 @@ function formatFBData(
     const message = el?.message ? formatText(el.message) : "";
     const message_chars = getOnlyCharacters(message);
 
-    const full_picture = el.full_picture
-      ? replaceImageURL(el.full_picture)
-      : "";
+    // Format URL does not work.
+    // const full_picture = el.full_picture
+    //   ? replaceImageURL(el.full_picture)
+    //   : "";
+
+    const full_picture = el.full_picture || "";
+
     return {
       message,
       message_chars,
