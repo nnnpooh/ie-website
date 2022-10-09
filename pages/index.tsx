@@ -1,5 +1,5 @@
 import Carousel from "../src/components/layouts/Carousel";
-import NewsTab from "../src/components/news/News";
+import NewsTab from "../src/components/news/NewsTab";
 import HomeCurriculum from "../src/components/curriculum/HomeCurriculum";
 import ExternalLink from "../src/components/layouts/ExternalLink";
 import HomeResearch from "../src/components/research/HomeResearch";
