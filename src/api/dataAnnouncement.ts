@@ -41,7 +41,7 @@ export async function getAnnouncements() {
   // console.log({ dataOut });
   // return { data: dataOut };
 
-  return dataOut;
+  return { dataAnnouncement: dataOut };
 }
 
 function formatAnnouncement(data: Maybe<Announcement> | undefined) {
@@ -54,6 +54,7 @@ function formatAnnouncement(data: Maybe<Announcement> | undefined) {
     announcementTypes: data?.announcementTypes?.nodes?.map((node) => ({
       ...node,
     })),
+    content: data.content,
   };
 
   // Format some fields

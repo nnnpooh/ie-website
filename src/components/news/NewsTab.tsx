@@ -1,15 +1,16 @@
 import { NextPage } from "next";
-import { FBFeedType } from "@src/api";
+import { FBFeedType, AnnouncementDataType } from "@src/api";
 import { IconPhoto, IconBrandMeta } from "@tabler/icons";
 import { Tabs, Slider } from "@mantine/core";
-import NewsAnnounce from "@components/news/NewsAccounce";
+import NewsAnnouncement from "@components/news/NewsAccouncement";
 import NewsFB from "@components/news/NewFB";
 
 interface Props {
-  data: FBFeedType[];
+  dataFB: FBFeedType[];
+  dataAnnouncement: AnnouncementDataType[];
 }
 
-const NewsTab: NextPage<Props> = ({ data: dataFB }) => {
+const NewsTab: NextPage<Props> = ({ dataFB, dataAnnouncement }) => {
   return (
     <div className="bg-white">
       <Tabs defaultValue="facebook" classNames={{ tab: "py-4 text-gray-400" }}>
@@ -27,7 +28,7 @@ const NewsTab: NextPage<Props> = ({ data: dataFB }) => {
         </Tabs.Panel>
 
         <Tabs.Panel value="messages" pt="xl">
-          <NewsAnnounce />
+          <NewsAnnouncement data={dataAnnouncement} />
         </Tabs.Panel>
       </Tabs>
     </div>

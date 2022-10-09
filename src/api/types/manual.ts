@@ -118,6 +118,7 @@ export interface AnnouncementDataType extends Announcement_AnnouncementFields {
   id: Maybe<string>;
   databaseId: Maybe<number>;
   date: Maybe<string>;
+  content: Maybe<string> | undefined;
   created_time_ms: number;
   announcementTypes: AnnouncementType[] | null;
 }
