@@ -1,5 +1,5 @@
 import Carousel from "../src/components/layouts/Carousel";
-import News from "../src/components/news/News";
+import NewsTab from "../src/components/news/News";
 import HomeCurriculum from "../src/components/curriculum/HomeCurriculum";
 import ExternalLink from "../src/components/layouts/ExternalLink";
 import HomeResearch from "../src/components/research/HomeResearch";
@@ -15,7 +15,7 @@ const Home: NextPage<Props> = ({ dataFacebookFeed }) => {
   return (
     <>
       <Carousel />
-      <News data={dataFacebookFeed} />
+      <NewsTab data={dataFacebookFeed} />
       <HomeCurriculum />
       <ExternalLink />
       <HomeResearch />
