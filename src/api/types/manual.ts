@@ -4,6 +4,8 @@ import {
   ResearchCenter_ResearchCenterFields,
   ResearchArea,
   Staff_StaffFields,
+  Announcement_AnnouncementFields,
+  AnnouncementType,
 } from "./graphql";
 
 export interface EducationItem {
@@ -105,4 +107,17 @@ export interface StaffType extends Staff_StaffFields {
   phone: string[];
   positionTh: string[];
   positionEn: string[];
+}
+
+export type AnnouncementTaxonomyType = Pick<
+  AnnouncementType,
+  "name" | "slug" | "id" | "databaseId" | "__typename"
+>;
+
+export interface AnnouncementDataType extends Announcement_AnnouncementFields {
+  id: Maybe<string>;
+  databaseId: Maybe<number>;
+  date: Maybe<string>;
+  created_time_ms: number;
+  announcementTypes: AnnouncementType[] | null;
 }

@@ -82,3 +82,25 @@ export const STAFF_FRAGMENT = gql`
     }
   }
 `;
+
+export const ANNOUNCEMENT_TYPE_FRAGMENT = gql`
+  fragment AnnouncementTypeFragment on AnnouncementType {
+    id
+    name
+    slug
+    databaseId
+  }
+`;
+
+export const ANNOUNCEMENT_FRAGMENT = gql`
+  fragment Announcement_AnnouncementFieldsFragment on Announcement_AnnouncementFields {
+    fieldGroupName
+    titleEn
+    titleTh
+    coverPhoto {
+      sourceUrl
+      sizes
+      altText
+    }
+  }
+`;

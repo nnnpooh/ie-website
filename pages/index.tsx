@@ -3,7 +3,7 @@ import NewsTab from "../src/components/news/NewsTab";
 import HomeCurriculum from "../src/components/curriculum/HomeCurriculum";
 import ExternalLink from "../src/components/layouts/ExternalLink";
 import HomeResearch from "../src/components/research/HomeResearch";
-import { getFacebookFeeds, FBFeedType } from "@src/api";
+import { getFacebookFeeds, FBFeedType, getAnnouncements } from "@src/api";
 import Partner from "../src/components/layouts/Partner";
 import { NextPage } from "next";
 
@@ -28,6 +28,7 @@ export default Home;
 
 export async function getStaticProps() {
   const { dataFacebookFeed } = await getFacebookFeeds();
+  const temp = await getAnnouncements();
   return {
     props: {
       dataFacebookFeed,
