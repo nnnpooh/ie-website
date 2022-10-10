@@ -12,7 +12,7 @@ export async function getAnnouncements() {
     query: gql`
       ${ANNOUNCEMENT_TYPE_FRAGMENT}
       ${ANNOUNCEMENT_FRAGMENT}
-      query NewQuery {
+      query Announcements {
         announcements {
           nodes {
             content
@@ -38,10 +38,37 @@ export async function getAnnouncements() {
     formatAnnouncement(el)
   );
 
-  // console.log({ dataOut });
-  // return { data: dataOut };
-
   return { dataAnnouncement: dataOut };
+}
+
+export async function getAnnouncementByDatabaseId(databaseId: number) {
+  const { data } = await client.query<RootQuery>({
+    query: gql`
+      ${ANNOUNCEMENT_TYPE_FRAGMENT}
+      ${ANNOUNCEMENT_FRAGMENT}
+      query Announcement($id: ID = ${databaseId}, $idType: AnnouncementIdType = DATABASE_ID) {
+        announcement(idType: $idType, id: $id) {
+          content
+          date
+          id
+          databaseId
+          title
+          announcement_fields {
+            ...Announcement_AnnouncementFieldsFragment
+          }
+          announcementTypes {
+            nodes {
+              ...AnnouncementTypeFragment
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  const dataOut = formatAnnouncement(data?.announcement);
+
+  return { data: dataOut };
 }
 
 function formatAnnouncement(data: Maybe<Announcement> | undefined) {
@@ -66,7 +93,3 @@ function formatAnnouncement(data: Maybe<Announcement> | undefined) {
 
   return dataOut;
 }
-
-// function formatJSONArray(s: Maybe<string> | undefined): string[] {
-//   return JSON.parse(s || "[]");
-// }
