@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "graphql-codegen --config codegen.yml",
+    "generate": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --config codegen.yml",
     "facebook": "ts-node ./src/facebook/index.ts"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
     "autoprefixer": "^10.4.7",
+    "cross-env": "^7.0.3",
     "eslint": "8.18.0",
     "eslint-config-next": "12.2.0",
     "postcss": "^8.4.14",

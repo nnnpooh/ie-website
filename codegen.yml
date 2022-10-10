@@ -1,5 +1,5 @@
 overwrite: true
-schema: "http://10.10.12.140:81/?graphql=true"
+schema: "https://ieadmin.eng.cmu.ac.th/graphql"
 generates:
   src/api/types/graphql.ts:
     plugins:
