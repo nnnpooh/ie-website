@@ -18,7 +18,7 @@ const AnnouncementMain: NextPage<props> = ({ data: ann }) => {
         </div>
         <div className="grid grid-cols-3 gap-2 mt-4">
           {ann?.map((res) => (
-            <div>{res.databaseId}</div>
+            <div key={res.id}>{res.databaseId}</div>
           ))}
         </div>
       </Container>
