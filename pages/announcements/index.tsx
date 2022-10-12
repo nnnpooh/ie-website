@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Container } from "@mantine/core";
+import { Container, Badge } from "@mantine/core";
 import Image from "next/image";
 import { getAnnouncements } from "@src/api";
 import { AnnouncementDataType } from "@api/types/manual";
@@ -16,9 +16,31 @@ const AnnouncementMain: NextPage<props> = ({ data: ann }) => {
         <div className="flex justify-center">
           <div className="text-4xl font-bold text-white">Faculty</div>
         </div>
-        <div className="grid grid-cols-3 gap-2 mt-4">
-          {ann?.map((res) => (
-            <div key={res.id}>{res.databaseId}</div>
+        <div className="flex flex-col gap-2 mt-4">
+          {ann?.map((ann) => (
+            <div key={ann.id} className="flex gap-4 bg-white p-2">
+              <div className="relative w-40 h-40 rounded-lg overflow-hidden">
+                {ann.coverPhoto?.sourceUrl ? (
+                  <Image
+                    src={ann.coverPhoto.sourceUrl}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                ) : (
+                  <div>Default Image</div>
+                )}
+              </div>
+
+              <div className="flex flex-col">
+                <div className="flex gap-2 flex-wrap">
+                  {ann.announcementTypes.map((el) => (
+                    <Badge key={el.id}> {el.name}</Badge>
+                  ))}
+                </div>
+                <div>{ann.titleTh}</div>
+                <div>{new Date(ann.created_time_ms).toLocaleDateString()}</div>
+              </div>
+            </div>
           ))}
         </div>
       </Container>
